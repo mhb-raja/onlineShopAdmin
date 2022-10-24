@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>زیرشاخه جدید برای {{data.parentTitle}}</h2>
+
+<div mat-dialog-content>
+    <form [formGroup]="ctgForm" novalidate (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>عنوان</mat-label>
+            <input matInput formControlName="title">
+            <mat-error *ngIf="ctgForm.controls['title'].hasError('required')">
+                وارد کردن عنوان <strong>الزامی</strong> است
+            </mat-error>
+            <mat-error *ngIf="ctgForm.controls['title'].hasError('maxlength')">
+                تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>عنوان در URL</mat-label>
+            <input matInput formControlName="urlTitle">
+            <mat-error *ngIf="ctgForm.controls['urlTitle'].hasError('required')">
+                وارد کردن عنوان <strong>الزامی</strong> است
+            </mat-error>
+            <mat-error *ngIf="ctgForm.controls['urlTitle'].hasError('maxlength')">
+                تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>    
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!ctgForm.valid" type="submit">ثبت</button>
+    <button mat-button (click)="discard()">انصراف</button>
+</div>
+
+

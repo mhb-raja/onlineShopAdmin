@@ -1,0 +1,50 @@
+{
+  "name": "sample-admin",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.3.11",
+    "@angular/cdk": "^13.3.9",
+    "@angular/common": "~13.3.11",
+    "@angular/compiler": "~13.3.11",
+    "@angular/core": "~13.3.11",
+    "@angular/forms": "~13.3.11",
+    "@angular/material": "^13.3.9",
+    "@angular/platform-browser": "~13.3.11",
+    "@angular/platform-browser-dynamic": "~13.3.11",
+    "@angular/router": "~13.3.11",
+    "bootstrap": "^5.2.1",
+    "jalali-moment": "^3.3.10",
+    "jquery": "^3.6.1",
+    "moment-jalaali": "^0.9.4",
+    "ng-persian-datepicker": "^2.4.0",
+    "ngx-cookie-service": "^13.1.2",
+    "ngx-image-compress": "^13.1.5",
+    "ngx-image-cropper": "^6.2.2",
+    "rxjs": "~6.6.0",
+    "tslib": "^2.2.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.3.9",
+    "@angular/cli": "^14.2.2",
+    "@angular/compiler-cli": "~13.3.11",
+    "@types/jasmine": "~3.6.0",
+    "@types/moment-jalaali": "^0.7.4",
+    "@types/node": "^12.11.1",
+    "jasmine-core": "~3.7.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "^1.5.0",
+    "typescript": "~4.6.4"
+  }
+}

@@ -1,0 +1,40 @@
+<!-- <div class="content-container">
+  <div class="container mt-5 text-center"> -->
+    <h2 mat-dialog-title>انتخاب و تغییر عکس محصول{{ myratio }}</h2>
+    <mat-dialog-content>
+      <input type="file" class="input-file" (change)="fileChangeEvent($event)" />
+
+      <div *ngIf="imageChangedEvent" class="col-md-8">
+        <image-cropper
+          class="my-cropper"
+          [imageChangedEvent]="imageChangedEvent"          
+          [maintainAspectRatio]="true"
+          (imageCropped)="imageCropped($event)"          
+          [aspectRatio]="myratio"
+          [cropperMinWidth]="24"
+          [cropperMaxWidth]="800"
+          [cropperMaxHeight]="800"
+          format="jpeg"
+        ></image-cropper>
+      </div>
+      <div *ngIf="croppedImageBase64" class="col-md-4 my-2">
+        <h4>تصویر نتیجه:</h4>
+        <p>ابعاد w:{{ croppedImageData.width }} x h:{{ croppedImageData.height }}</p>
+        <img [src]="croppedImageBase64" alt="cropped" />        
+      </div>   
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!croppedImageBase64"
+        (click)="submit()"
+        type="submit"
+      >
+        ثبت
+      </button>
+      <button mat-button (click)="dismiss()">انصراف</button>
+    </mat-dialog-actions>
+
+

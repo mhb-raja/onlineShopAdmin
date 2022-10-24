@@ -1,0 +1,20 @@
+
+.preview-image {
+    // border: 1px dashed #9d9d9d;
+    // border-radius: 10px;
+    width: 150px;
+    height: 100px;
+  }
+  ::ng-deep ng-persian-datepicker .datepicker-outer-container {
+    position: absolute;
+    width: 300px;
+    top: 43px;
+    right: -10px;
+    z-index: 1000;
+    //background-color: $icm-dark-deep;
+  }
+  
+  .row .col input.filebg{
+    background: rgba(230, 230, 230, 1);
+  padding: 1em;
+  }

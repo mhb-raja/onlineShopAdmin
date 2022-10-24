@@ -1,0 +1,118 @@
+<section class="flex-row">
+    <div class="singleColumn">
+        <a mat-raised-button [routerLink]="'/sliders'" color="accent">برگشت به لیست</a>
+    </div>
+</section>
+<form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>اطلاعات عکس</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>تاریخ شروع نمایش</mat-label>
+                        <input matInput type="text" formControlName="activeFrom" #startDP autocomplete="off" />
+                        <ng-persian-datepicker [input]="startDP" [uiTheme]="'dark'" [timeMeridian]="false"
+                            [dateMin]="dateMinimum" [dateInitValue]="false" [timeShowSecond]="false">
+                        </ng-persian-datepicker>
+                        <mat-icon matSuffix>calendar_today</mat-icon>
+                        <mat-error *ngIf="myForm.controls['activeFrom'].hasError('required')">
+                            وارد کردن تاریخ شروع نمایش <strong>الزامی</strong> است
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>تاریخ پایان نمایش</mat-label>
+                        <input matInput type="text" formControlName="activeUntil" #endDP />
+                        <ng-persian-datepicker [input]="endDP" [uiTheme]="'dark'" [timeMeridian]="false"
+                            [dateMin]="dateMinimum" [dateInitValue]="false" [timeShowSecond]="false">
+                        </ng-persian-datepicker>
+                        <mat-icon matSuffix>calendar_today</mat-icon>
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-error *ngIf="myForm.errors?.wrongDateRange && (myForm.touched || myForm.dirty)">
+                تاریخ پایان باید بعد از تاریخ شروع باشد
+            </mat-error>
+            <!-- <div class="row">
+                <div class="col">
+                    <app-persian-date-picker [title]=""></app-persian-date-picker>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>عنوان</mat-label>
+                        <input matInput  formControlName="title">
+                        <mat-error *ngIf="myForm.controls['title'].hasError('required')">
+                            وارد کردن عنوان <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['title'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>توضیحات</mat-label>
+                        <textarea matInput formControlName="description"></textarea>
+                        <mat-error *ngIf="myForm.controls['description'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenDescription}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>لینک</mat-label>
+                        <input matInput  formControlName="link">
+                        <mat-error *ngIf="myForm.controls['link'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenLink}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-label>تصویر فعلی</mat-label>
+                    <img mat-card-image [src]="imagePath + dbData.base64Image" alt="" class="preview-image">
+                </div>
+                <div class="col">
+                    <mat-label>تصویر جدید</mat-label>
+                    <!-- <app-image-picker class="full-width" (imagePick)="changeImage($event)"></app-image-picker> -->
+                    <button mat-raised-button color="warn" type="button" (click)="openCropper()">
+                        <mat-icon matSuffix>photo</mat-icon>
+                        انتخاب عکس</button>                    
+
+                    <img mat-card-image [src]="selectedImage" alt="" *ngIf="selectedImage" class="preview-image">
+
+                    <button *ngIf="selectedImage" mat-icon-button (click)="discardChangeImage()" matTooltip="انصراف">
+                        <mat-icon>highlight_off</mat-icon>
+                    </button>
+
+
+                    <mat-error *ngIf="myForm.controls['imageName'].hasError('required')">
+                        وارد کردن تصویر <strong>الزامی</strong> است
+                    </mat-error>
+                    <!-- <img mat-card-image [src]="selectedImage" alt="" class="preview-image"> -->
+                    <!-- <img [src]="selectedImage" alt="" *ngIf="selectedImage!==''" class="preview-image"> -->
+                    <!-- <mat-error *ngIf=" selectedImage==''">
+                        ssssوارد کردن تصویر <strong>الزامی</strong> است
+                    </mat-error> -->
+                </div>
+
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button  mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit">ثبت</button>
+            
+        </mat-card-actions>
+    </mat-card>
+</form>

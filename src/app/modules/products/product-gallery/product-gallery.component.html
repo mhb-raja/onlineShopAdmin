@@ -1,0 +1,33 @@
+<section *ngIf="!comingFromChange" class="flex-row">
+  <div class="singleColumn">
+    <a mat-raised-button [routerLink]="'/products'" color="accent"
+      >برگشت به لیست</a
+    >
+  </div>
+</section>
+<mat-card class="card">
+  <mat-card-title>گالری تصاویر</mat-card-title>
+  <mat-card-content>
+    <img mat-card-sm-image *ngFor="let item of gallery$ | async" [src]="imagePath + item.imageName" alt="" />
+    <!-- <span matBadge="4" matBadgeOverlap="true">
+        <img
+          mat-card-sm-image
+          src=""
+          alt=""
+        />
+      </span> -->
+    <div *ngFor="let item of gallery$ | async">
+      <div>
+        <img mat-card-sm-image [src]="imagePath + item.imageName" alt="" />
+        <button mat-icon-button (click)="deleteItem(item.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button #addButton mat-raised-button color="primary" (click)="openCropper()">
+      افزودن عکس جدید
+    </button>
+  </mat-card-actions>
+</mat-card>

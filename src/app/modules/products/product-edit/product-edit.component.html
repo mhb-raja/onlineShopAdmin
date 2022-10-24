@@ -1,0 +1,143 @@
+<section class="flex-row">
+    <div class="singleColumn">
+        <a mat-raised-button [routerLink]="'/products'" color="accent">برگشت به لیست</a>        
+    </div>
+</section>
+
+<form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>ویرایش اطلاعات محصول</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">                    
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>نام محصول</mat-label>
+                        <input matInput formControlName="productName" required>
+                        <mat-error *ngIf="myForm.controls['productName'].hasError('required')">
+                            وارد کردن نام محصول <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['productName'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenText}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>عنوان در URL</mat-label>
+                        <input matInput formControlName="urlCodeFa" required>
+                        <mat-error *ngIf="myForm.controls['urlCodeFa'].hasError('required')">
+                            وارد کردن عنوان در URL <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['urlCodeFa'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenText}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <!-- <div class="row">
+                <div class="col">
+                    دسته بندی: <mat-label *ngIf="selectedCategory"> {{selectedCategory.title}}</mat-label>
+                    <app-category-tree [isForSelecting]="true" (itemSelected)="onCategorySelected($event)">
+                    </app-category-tree>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>قیمت</mat-label>
+                        <span matSuffix>تومان &nbsp;</span>
+                        <input matInput type="number" formControlName="price" required>
+                        <mat-error *ngIf="myForm.controls['price'].hasError('required')">
+                            وارد کردن قیمت <strong>الزامی</strong> است
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>توضیح مختصر</mat-label>
+                        <input matInput formControlName="shortDescription" required>
+                        <mat-error *ngIf="myForm.controls['shortDescription'].hasError('required')">
+                            وارد کردن توضیح مختصر <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['shortDescription'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenText}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>توضیحات</mat-label>
+                        <textarea matInput formControlName="description" required></textarea>
+                        <mat-error *ngIf="myForm.controls['description'].hasError('required')">
+                            وارد کردن توضیحات <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['description'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenDescription}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-checkbox formControlName="isAvailable" class="example-margin">موجود</mat-checkbox>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col">
+                    <mat-label>تصویر فعلی</mat-label>
+                    <img mat-card-image [src]="imagePath + dbData.base64Image" alt="" class="preview-image">
+                </div>
+                <div class="col">
+                    <mat-label>تصویر جدید</mat-label>
+                    <!-- <app-image-picker class="full-width" (imagePick)="changeImage($event)"></app-image-picker> -->
+                    <button mat-raised-button color="warn" type="button" (click)="openCropper()">
+                        <mat-icon matSuffix>photo</mat-icon>
+                        انتخاب عکس</button>                    
+
+                    <img mat-card-image [src]="selectedImage" alt="" *ngIf="selectedImage" alt=""
+                        class="preview-image">
+
+                    <button *ngIf="selectedImage" mat-icon-button (click)="discardChangeImage()" matTooltip="انصراف">
+                        <mat-icon>highlight_off</mat-icon>
+                    </button>
+                    <mat-error *ngIf="myForm.controls['imageName'].hasError('required')">
+                        وارد کردن تصویر <strong>الزامی</strong> است
+                    </mat-error>                    
+                </div>
+            </div>
+            <p>Form Status: {{ myForm.status }}</p>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit">ثبت</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+<app-product-gallery [productId]="productId"></app-product-gallery>
+<!-- <mat-card class="card">
+    <mat-card-title>گالری تصاویر</mat-card-title>
+    <mat-card-content>
+      
+    </mat-card-content>
+    <mat-card-actions>
+      <span matBadge="4" matBadgeOverlap="true">
+        <img
+          mat-card-sm-image
+          src=""
+          alt=""
+        />
+      </span>
+      <button mat-raised-button color="accent">افزودن عکس جدید</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card> -->
