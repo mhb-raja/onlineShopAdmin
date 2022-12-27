@@ -17,6 +17,8 @@ export interface productDatasourceDTO extends GenericDatasource<ProductDTO> {
     text: string;
     startPrice: number,
     endPrice: number,
+    maxPrice: number,
+    availableOnly:boolean,
     categories: number[],
     orderBy: ProductOrderBy
 }

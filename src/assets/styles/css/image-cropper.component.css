@@ -1,0 +1,11 @@
+.my-cropper {
+  --cropper-outline-color: rgba(150,100,130,0.6);
+  --cropper-overlay-color:rgba(200,200,200,0.9);
+  padding: 1em;
+}
+
+.input-file {
+  background: #e6e6e6;
+  padding: 1em;
+}
+/*# sourceMappingURL=image-cropper.component.css.map */

@@ -1,6 +1,4 @@
-import { isPlatformBrowser } from "@angular/common";
 import * as moment from 'jalali-moment';
-//import { Options } from "selenium-webdriver";
 
 export class helper {
 

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../../../app/modules/test/tree/tree.component.scss"
+    ],
+    "names": [],
+    "file": "tree.component.css"
+}

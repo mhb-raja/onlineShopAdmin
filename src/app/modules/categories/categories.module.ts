@@ -6,6 +6,7 @@ import { CategoryTableComponent } from './category-table/category-table.componen
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   { path: '', component: CategoryTableComponent },
@@ -20,10 +21,12 @@ const routes: Routes = [
     CategoryTableComponent
   ],
   imports: [
-    CommonModule,
+    //CommonModule,
+    SharedModule,
     RouterModule.forChild(routes),
-    MaterialModule,
-    ReactiveFormsModule, FormsModule,
+    
+    //MaterialModule,
+    //ReactiveFormsModule, FormsModule,
   ],
   exports: [RouterModule]
 })

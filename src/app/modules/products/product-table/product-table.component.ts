@@ -38,7 +38,9 @@ export class ProductTableComponent implements OnInit {
     startPrice: 0,
     endPrice: 0,
     categories: [],
-    orderBy: null
+    orderBy: null,
+    maxPrice: 0,
+    availableOnly: false
   };
 
   searchText: string = null;
@@ -51,7 +53,7 @@ export class ProductTableComponent implements OnInit {
     'imageName',
     'imageGallery',
     'available',
-    //'description', 
+    // 'shortDescription', 
     // 'link',
     'edit', 'delete'];
 

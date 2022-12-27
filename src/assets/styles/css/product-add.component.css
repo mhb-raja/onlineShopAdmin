@@ -1,0 +1,18 @@
+.preview-image {
+  width: 150px;
+  height: 100px;
+}
+
+::ng-deep ng-persian-datepicker .datepicker-outer-container {
+  position: absolute;
+  width: 300px;
+  top: 43px;
+  right: -10px;
+  z-index: 1000;
+}
+
+.row .col input.filebg {
+  background: #e6e6e6;
+  padding: 1em;
+}
+/*# sourceMappingURL=product-add.component.css.map */

@@ -8,7 +8,7 @@
 <mat-card class="card">
   <mat-card-title>گالری تصاویر</mat-card-title>
   <mat-card-content>
-    <img mat-card-sm-image *ngFor="let item of gallery$ | async" [src]="imagePath + item.imageName" alt="" />
+    
     <!-- <span matBadge="4" matBadgeOverlap="true">
         <img
           mat-card-sm-image
@@ -16,10 +16,18 @@
           alt=""
         />
       </span> -->
-    <div *ngFor="let item of gallery$ | async">
-      <div>
-        <img mat-card-sm-image [src]="imagePath + item.imageName" alt="" />
-        <button mat-icon-button (click)="deleteItem(item.id)">
+    <div class="flex-container">
+      <div class="gallery-item" *ngFor="let item of gallery$ | async">
+        <img mat-card-sm-image class="gallery-image" [src]="imagePath + item.imageName" alt="" />
+        <button mat-mini-fab class="gallery-item-delete-button" (click)="deleteItem(item.id)" color="warn" aria-label="icon button with a delete icon">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="flex-container">
+      <div class="gallery-item" *ngFor="let item of gallery$ | async">
+        <img mat-card-sm-image class="gallery-image" [src]="imagePath + item.imageName" alt="" />
+        <button mat-icon-button class="gallery-item-delete-button" (click)="deleteItem(item.id)" color="warn" aria-label="icon button with a delete icon">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

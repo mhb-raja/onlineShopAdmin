@@ -1,0 +1,13 @@
+.preview-image {
+  width: 150px;
+  height: 100px;
+}
+
+::ng-deep ng-persian-datepicker .datepicker-outer-container {
+  position: absolute;
+  width: 300px;
+  top: 43px;
+  right: -10px;
+  z-index: 1000;
+}
+/*# sourceMappingURL=slider-edit.component.css.map */

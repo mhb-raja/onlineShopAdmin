@@ -1,3 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import 'assets/style/base', 'assets/style/table','assets/style/form';
+@import "assets/styles/base", "assets/styles/table", "assets/styles/form";
+
+@font-face {
+    font-family: "Vazir";
+    src: url("assets/fonts/vazir.eot") format("eot"), url("assets/fonts/vazir.ttf") format("truetype"),
+        url("assets/fonts/vazir.woff") format("woff"), url("assets/fonts/vazir.woff2") format("woff2");
+}
+
+// body{
+//     font-family: 'Vazir' !important;
+// }
+
+.material-icons{
+    font-size: 18px;
+        
+}
+.mat-icon{
+    width: 20px;
+    height: 20px;
+}

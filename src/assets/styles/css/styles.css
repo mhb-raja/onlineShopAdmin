@@ -134,8 +134,50 @@ content-container {
           flex: 0 1 30px;
 }
 
+.element-thumbnail-container, .element-image-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.element-thumbnail-container {
+  margin: 4px;
+}
+
+.element-thumbnail-container img {
+  max-width: 64px;
+  max-height: 50px;
+  background-size: cover;
+}
+
+.element-image-container {
+  border: 1px solid black;
+  padding: 8px;
+  margin: 8px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 30%;
+          flex: 0 1 30%;
+}
+
+.element-image-container img {
+  margin: auto;
+  max-width: 160px;
+}
+
+.element-description {
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+  padding: 16px;
+}
+
 form {
-  width: 95%;
   margin: auto;
 }
 
@@ -143,17 +185,17 @@ form .full-width {
   width: 100%;
 }
 
-form .card {
+.card {
   min-width: 120px;
-  margin: 20px auto;
+  margin: 20px;
 }
 
-form .mat-radio-button {
+.mat-radio-button {
   display: block;
   margin: 5px 0;
 }
 
-form .row {
+.row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -163,14 +205,19 @@ form .row {
           flex-direction: row;
 }
 
-form .col {
+.col {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
   margin-right: 20px;
 }
 
-form .col:last-child {
+.col:last-child {
   margin-right: 0;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("assets/fonts/vazir.eot") format("eot"), url("assets/fonts/vazir.ttf") format("truetype"), url("assets/fonts/vazir.woff") format("woff"), url("assets/fonts/vazir.woff2") format("woff2");
 }
 /*# sourceMappingURL=styles.css.map */

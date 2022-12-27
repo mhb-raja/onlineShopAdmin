@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../../../app/modules/test/ng-example/ng-example.component.scss"
+    ],
+    "names": [],
+    "file": "ng-example.component.css"
+}

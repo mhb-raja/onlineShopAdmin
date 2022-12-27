@@ -1,0 +1,29 @@
+<section class="flex-row">
+  <div class="singleColumn">
+    <a mat-raised-button [routerLink]="'/products/comments'" color="accent">برگشت به لیست</a>
+  </div>
+</section>
+
+<div *ngIf="product$ | async as prd">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>{{prd.productName}}</mat-card-title>
+      <mat-card-subtitle>{{prd.urlCodeFa}}</mat-card-subtitle>
+      <img mat-card-md-image [src]="imagePath + prd.base64Image" alt="">
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{prd.shortDescription}}</p>
+      <p>{{prd.description}}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- productName: string,
+    urlCodeFa: string,
+    price: number,
+    shortDescription: string,
+    description: string,
+    base64Image: string,
+    isAvailable: boolean,
+    categoryId: number,
+    categoryTitle?: string -->

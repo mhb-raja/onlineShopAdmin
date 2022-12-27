@@ -18,11 +18,11 @@ export class ErrorHandlerService {
    */
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
+      // TODO: send the error to remote logging infrastructure !!!!!!!!!!!!!!!!!
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} با خطا مواجه شد: ${error.message}`);
+      this.showSnackbar(`${operation} با خطا مواجه شد: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -35,7 +35,7 @@ export class ErrorHandlerService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} با خطا مواجه شد: ${error.message}`);
+      this.showSnackbar(`${operation} با خطا مواجه شد: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -43,8 +43,8 @@ export class ErrorHandlerService {
   }
 
   /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    this.snackBar.open(message, 'OK', { duration: 5000 });
+  private showSnackbar(message: string, duration=5000) {
+    this.snackBar.open(message, 'OK', { duration: duration });
     //this.messageService.add(`HeroService: ${message}`);
   }
 
@@ -52,14 +52,17 @@ export class ErrorHandlerService {
     switch (res.eStatus) {
       case Status.NotFound:
         this.router.navigate(['/not-found']);
-      console.log('after nav');
-      
+        console.log('after nav');
         return result;
-        break;
+
+      case Status.UnAuthorized:
+        this.showSnackbar(res.message);
+        this.router.navigate(['/login']);
+        return result;
 
       default:
-        console.log('default',res);
-        this.log(res.message);
+        console.log('default', res);
+        this.showSnackbar(res.message);
         return result;
     }
 

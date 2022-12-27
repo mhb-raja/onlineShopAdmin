@@ -40,9 +40,9 @@ export class ProductEditComponent implements OnInit {
       10
     );
 
-    this.productService.getProductForEdit(this.productId).subscribe((res) => {
+    this.productService.getProductDetails(this.productId).subscribe((res) => {
       this.dbData = res;
-      console.log(res);
+      //console.log(res);
       
       if (res) this.populateForm();
       //else this.goBack();
@@ -50,7 +50,7 @@ export class ProductEditComponent implements OnInit {
 
     // this.activatedRoute.params.pipe(
     //   map((params)=>parseInt(params.id, 0)),
-    //   concatMap(id => this.productService.getProductForEdit(id))
+    //   concatMap(id => this.productService.getProductDetails(id))
     // ).subscribe(res => {
     //   console.log(res);
     //   this.dbData = res;

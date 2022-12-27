@@ -25,7 +25,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    ReactiveFormsModule, FormsModule,
+    //ReactiveFormsModule, FormsModule,
     NgPersianDatepickerModule,
     SharedModule
   ],

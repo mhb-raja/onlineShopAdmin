@@ -1,1 +1,45 @@
-<p>login works!</p>
+<form [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>ورود به بخش مدیریت سایت</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>            
+            
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>ایمیل</mat-label>
+                        <input matInput  formControlName="email">
+                        <mat-error *ngIf="myForm.controls['email'].hasError('required')">
+                            وارد کردن ایمیل <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['email'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenText}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>رمز عبور</mat-label>
+                        <input type="password" matInput  formControlName="password">
+                        <mat-error *ngIf="myForm.controls['password'].hasError('required')">
+                            وارد کردن رمز عبور <strong>الزامی</strong> است
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['password'].hasError('maxlength')">
+                            تعداد کاراکترها نمیتواند بیشتر از {{maxLenText}} باشد
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+                        
+            <p>Form Status: {{ myForm.status }}</p>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit">ورود</button>
+        </mat-card-actions>
+    </mat-card>
+
+</form>
