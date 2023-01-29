@@ -1,0 +1,31 @@
+<form class="example-form">
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>عنوان ویژگی...</mat-label>
+      <input type="text" matInput [formControl]="searchInput" [matAutocomplete]="auto">
+      <!-- <button #test2 [disabled]="disableAddButton" mat-flat-button matSuffix color="primary">test2</button> -->
+      <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="optionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+          <!-- {{option.title}} -->
+          {{displayFn(option)}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+</form>
+
+<!-- 
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>عنوان ویژگی</mat-label>
+      <input type="text"
+             placeholder="انتخاب یا وارد کنید"
+             aria-label="Attribute title"
+             matInput
+             [formControl]="searchInput"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form> -->

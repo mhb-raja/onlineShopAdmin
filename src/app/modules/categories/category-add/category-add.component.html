@@ -1,32 +1,141 @@
-<h2 mat-dialog-title>زیرشاخه جدید برای {{data.parentTitle}}</h2>
+<section class="flex-row">
+    <div class="singleColumn">
+        <a mat-raised-button [routerLink]="'/categories'" color="accent">برگشت به لیست</a>        
+    </div>
+</section>
+<form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="card" *ngIf="path$|async as catsPath">
+        <mat-card-header >
+            <mat-card-title>افزودن زیرشاخه به دسته ی <strong>{{catsPath[catsPath.length-1].title}}</strong></mat-card-title>
+            <mat-card-subtitle >
+                واقع در مسیر: 
+                <span *ngFor="let cat of catsPath">{{ cat.title }} / </span>
+            </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="children$ | async as catChildren">
+                فرزندان این دسته: 
+                <span *ngFor="let childCat of catChildren"> {{childCat.title}} - </span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="fill">
+                <mat-label>عنوان</mat-label>
+                <input matInput formControlName="title">
+                <mat-error *ngIf="myForm.controls['title'].hasError('required')">
+                    وارد کردن عنوان <strong>الزامی</strong> است
+                </mat-error>
+                <mat-error *ngIf="myForm.controls['title'].hasError('maxlength')">
+                    تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>عنوان در URL</mat-label>
+                <input matInput formControlName="urlTitle">
+                <mat-error *ngIf="myForm.controls['urlTitle'].hasError('required')">
+                    وارد کردن عنوان <strong>الزامی</strong> است
+                </mat-error>
+                <mat-error *ngIf="myForm.controls['urlTitle'].hasError('maxlength')">
+                    تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
+                </mat-error>
+            </mat-form-field>
+            
+            <p>Form Status: {{ myForm.status }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit">ثبت</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+<mat-card class="card" *ngIf="addedCategory$ | async as newCtg">
+    <mat-card-header >
+        <mat-card-subtitle >دسته {{newCtg.title}} ایجاد شد</mat-card-subtitle>
+        <mat-card-title>افزودن ویژگی ها برای « {{newCtg.title}} »</mat-card-title>
+    </mat-card-header>
+    <mat-card-content ></mat-card-content>
+</mat-card>
 
-<div mat-dialog-content>
-    <form [formGroup]="ctgForm" novalidate (ngSubmit)="onSubmit()">
+
+
+
+<!-- 
+<div class="example-button-container" *ngIf="addedCategory$ | async as newCtg">      
+  <p>
+    <i>افزودن ویژگی ها برای « {{newCtg.title}} »</i>
+  </p>
+  <mat-form-field appearance="fill" class="example-form-field">
+    <mat-label>Video keywords</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Enter keywords" [formControl]="formControl" >
+      <mat-chip-row *ngFor="let keyword of keywords" (removed)="removeKeyword(keyword)">
+        {{keyword}}
+        <button matChipRemove aria-label="'remove ' + keyword">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input placeholder="New keyword..."
+            [matChipInputFor]="chipGrid"
+            (matChipInputTokenEnd)="add($event)"/>
+  </mat-form-field>
+  
+  <p>
+    <b>The following keywords are entered:</b> {{formControl.value}}
+  </p>
+</div>
+
+
+<form>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-label>Favorite Fruits</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Fruit selection">
+        <mat-chip-row *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+          {{fruit}}
+          <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      </mat-chip-grid>
+      <input placeholder="New Fruit..." #fruitInput [formControl]="fruitCtrl"
+        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"/>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+          {{fruit}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form> -->
+  
+
+<!-- <h2 mat-dialog-title>زیرشاخه جدید برای {{data.parentTitle}}</h2> -->
+
+<!-- <div mat-dialog-content>
+    <form [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
             <mat-label>عنوان</mat-label>
             <input matInput formControlName="title">
-            <mat-error *ngIf="ctgForm.controls['title'].hasError('required')">
+            <mat-error *ngIf="myForm.controls['title'].hasError('required')">
                 وارد کردن عنوان <strong>الزامی</strong> است
             </mat-error>
-            <mat-error *ngIf="ctgForm.controls['title'].hasError('maxlength')">
+            <mat-error *ngIf="myForm.controls['title'].hasError('maxlength')">
                 تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
             </mat-error>
         </mat-form-field>
+
         <mat-form-field appearance="fill">
             <mat-label>عنوان در URL</mat-label>
             <input matInput formControlName="urlTitle">
-            <mat-error *ngIf="ctgForm.controls['urlTitle'].hasError('required')">
+            <mat-error *ngIf="myForm.controls['urlTitle'].hasError('required')">
                 وارد کردن عنوان <strong>الزامی</strong> است
             </mat-error>
-            <mat-error *ngIf="ctgForm.controls['urlTitle'].hasError('maxlength')">
+            <mat-error *ngIf="myForm.controls['urlTitle'].hasError('maxlength')">
                 تعداد کاراکترها نمیتواند بیشتر از {{maxLenTitle}} باشد
             </mat-error>
         </mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions>    
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!ctgForm.valid" type="submit">ثبت</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!myForm.valid" type="submit">ثبت</button>
     <button mat-button (click)="discard()">انصراف</button>
-</div>
-
+</div> -->
 

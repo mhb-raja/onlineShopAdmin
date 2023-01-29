@@ -34,10 +34,10 @@ export class DefaultComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     console.log('init default');
-    this.authService.checkAdminAuth().pipe(
-      tap(res => this.authService.setCurrentUser(res)),      
-      takeUntil(componentDestroyed(this))
-    ).subscribe();
+    // this.authService.checkAdminAuth().pipe(
+    //   tap(res => this.authService.setCurrentUser(res)),      
+    //   takeUntil(componentDestroyed(this))
+    // ).subscribe();
     this.unreadCommentsCount$ = this.productService.getUnreadCommentsCount();
   }
 

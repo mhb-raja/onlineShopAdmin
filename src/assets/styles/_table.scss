@@ -26,11 +26,11 @@
             justify-content: space-evenly;
         }
         .element-row:not(.expanded-row):hover {
-            background: crimson;
+            background: rgb(238, 153, 170);
         }
-        .element-row:not(.expanded-row):active {
-            background: goldenrod;
-        }
+        // .element-row:not(.expanded-row):active {
+        //     background: goldenrod;
+        // }
         .element-expanded-row {
             overflow: hidden;
             display: flex;

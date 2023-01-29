@@ -17,8 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-
-FormsModule,ReactiveFormsModule, //2022-12-10 00:28
+    FormsModule,
+    ReactiveFormsModule, //2022-12-10 00:28
 
     MaterialModule,
     MessageModule,

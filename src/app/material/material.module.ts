@@ -24,6 +24,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatExpansionModule} from '@angular/material/expansion'
 //import { MatSpinner } from '@angular/material/progress-spinner';
 
 @NgModule({
@@ -58,6 +59,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatAutocompleteModule,
     MatBadgeModule,
     MatProgressBarModule,
+    MatExpansionModule
     //MatSpinner
   ],
 })

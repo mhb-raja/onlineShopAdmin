@@ -6,13 +6,68 @@
     <mat-toolbar>
       <a mat-list-item [routerLink]="['/']">داشبورد</a>
     </mat-toolbar>
-    <mat-nav-list>      
-      <a mat-list-item [routerLink]="['/sliders']">اسلایدر</a>
-      <a mat-list-item [routerLink]="['/categories']">مدیریت کتگوری ها</a>
-      <a mat-list-item [routerLink]="['/products']">مدیریت محصولات</a>
-      <a mat-list-item [routerLink]="['/products/comments']">مدیریت نظرات</a>
+    <mat-nav-list>
+      <mat-accordion>
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              سفارش ها
+            </mat-panel-title>            
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['/']">dummy</a>          
+        </mat-expansion-panel>
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              صفحه اصلی سایت
+            </mat-panel-title>            
+          </mat-expansion-panel-header> 
+          <mat-divider></mat-divider>         
+          <a mat-list-item [routerLink]="['/sliders']">اسلایدر</a>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              کاتالوگ
+            </mat-panel-title>
+            
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['/products']">محصولات</a>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['/categories']">دسته بندی ها</a>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['/attribs']">ویژگی ها</a>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              کاربران
+            </mat-panel-title>            
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['/products/comments']">نظرات</a>          
+        </mat-expansion-panel>
+
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              گزارش ها
+            </mat-panel-title>            
+          </mat-expansion-panel-header>
+          <a mat-list-item [routerLink]="['/']">dummy</a>
+          
+        </mat-expansion-panel>
+      </mat-accordion>  
+           
+
       <a mat-list-item [routerLink]="['/ng']">test</a>
-      <a mat-list-item href="#">Link 1</a>    
+      <a mat-list-item [routerLink]="['/categories/tree']">tree</a>
+      <a mat-list-item [routerLink]="['/dyamic']">dynamic</a>
+        
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

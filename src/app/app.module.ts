@@ -18,6 +18,7 @@ import { MatTestComponent } from './modules/mat-test/mat-test.component';
 import { LoginComponent } from './modules/user/login/login.component';
 import { RegisterComponent } from './modules/user/register/register.component';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
+import { HelperService } from './services/helper.service';
 
 
 
@@ -29,7 +30,7 @@ import { NotFoundComponent } from './modules/not-found/not-found.component';
     HeroSearchComponent,
     MatTestComponent,
     LoginComponent,RegisterComponent, 
-    NotFoundComponent
+    NotFoundComponent, 
   ],
   imports: [
     
@@ -47,6 +48,7 @@ SharedModule,
   providers: [
     //SliderService,
     ErrorHandlerService,
+    HelperService,
     { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'fa-IR' }
   ],

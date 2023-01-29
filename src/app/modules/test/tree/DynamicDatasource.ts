@@ -82,7 +82,7 @@ export class DynamicDatasource {
             this.service.GetCategoryChildren(node.content.id)
                 .pipe(take(1))
                 .subscribe(children => {
-                    console.log(children);
+                    console.log('get children',children);
                     if (!children) node.expandable = false;
                     const nodes = [];
                     children.forEach(cat =>

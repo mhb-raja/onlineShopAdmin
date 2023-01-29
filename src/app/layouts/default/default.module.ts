@@ -40,9 +40,17 @@ const routes: Routes = [
             (m) => m.ProductsModule
           ),
       },
+      {
+        path: 'attribs',
+        loadChildren: () =>
+          import('src/app/modules/attribs/attrib.module').then(
+            (m) => m.AttribModule
+          ),
+      },
       { path: 'test', component: MatTestComponent },
-      { path: 'tree', component: TreeComponent },
+      // { path: 'tree', component: TreeComponent },
       { path: 'ng', component: NgExampleComponent },
+      { path:'dynamic',component:NgDynamicExampleComponent}
     ],
   },
 ];

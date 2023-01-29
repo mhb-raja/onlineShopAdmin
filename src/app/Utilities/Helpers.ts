@@ -19,6 +19,7 @@ export class helper {
         return moment.from(date.toString(), 'en', 'YYYY-MM-DD HH:mm').locale('fa').format('YYYY-MM-DD HH:mm');        
     }
 
+    
     test(str: string) {
 
         moment.from('1392/6/3 16:40', 'fa', 'YYYY/M/D HH:mm')

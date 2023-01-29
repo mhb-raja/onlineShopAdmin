@@ -41,6 +41,7 @@ export class DynamicDatabase {
   isExpandable(node: string): boolean {
     return this.dataMap.has(node);
   }
+
 }
 /**
  * File database, it can build a tree structured Json object from string.
@@ -161,3 +162,4 @@ export class NgDynamicExampleComponent {
 
   hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
 }
+

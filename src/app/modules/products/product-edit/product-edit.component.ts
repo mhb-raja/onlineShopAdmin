@@ -35,6 +35,7 @@ export class ProductEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     this.productId = parseInt(
       this.activatedRoute.snapshot.paramMap.get('id')!,
       10

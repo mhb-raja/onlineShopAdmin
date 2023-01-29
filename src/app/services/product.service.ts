@@ -2,11 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { AttribDatasourceDTO, AttribDTO, AttribMiniDTO, AttribTypeDTO } from '../DTOs/category/AttribDTO';
 import {
   CategoryDTO,
-  CategoryForEditDTO,
-  CategoryTreeItemDTO,
+  CategoryDetailDTO,
+  CategoryMiniDTO,
+  //CategoryTreeItemDTO,
 } from '../DTOs/category/CategoryDTO';
+import { ValueDatasource, ValueDTO } from '../DTOs/category/ValueDTO';
 import { IResponseResult, Status } from '../DTOs/common/IResponseResult';
 import { ProductCommentDatasource } from '../DTOs/product/ProductCommentDTO';
 import { productDatasourceDTO, ProductDTO } from '../DTOs/product/ProductDTO';
@@ -129,7 +132,7 @@ export class ProductService {
         if (res.eStatus === Status.Success) return true;
         else return this.errorHandler.handleServerUnsuccess(res, false);
       }),
-      catchError(this.errorHandler.handleError<boolean>(`حذف نظر:${id}`))
+      catchError(this.errorHandler.handleError<boolean>(`حذف محصول:${id}`))
     );
   }
 
@@ -141,22 +144,28 @@ export class ProductService {
       .post<IResponseResult<any>>('/adminproduct/add-category', ctg)
       .pipe(
         map((res) => {
-          if (res.eStatus === Status.Success) return true;
-          // if (res.eStatus === Status.NotFound)
+          if (res.eStatus === Status.Success) return true;          
           else return this.errorHandler.handleServerUnsuccess(res, false);
         }),
-        catchError(
-          this.errorHandler.handleError<boolean>(
-            `ثبت کتگوری جدید : ${ctg.title}`
-          )
-        )
+        catchError(this.errorHandler.handleError<boolean>(`ثبت کتگوری جدید : ${ctg.title}`))        
       );
   }
-
-  getCategoryForEdit(id: number): Observable<CategoryForEditDTO> {
+  addCategory_returnId(ctg: CategoryDTO): Observable<CategoryDTO> {
     return this.http
-      .get<IResponseResult<CategoryForEditDTO>>(
-        '/adminproduct/get-category-for-edit/' + id
+      .post<IResponseResult<any>>('/adminproduct/add-category-retId', ctg)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;          
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(this.errorHandler.handleError<CategoryDTO>(`ثبت کتگوری جدید : ${ctg.title}`))
+      );
+  }
+  //
+  getCategoryPath(id: number): Observable<CategoryMiniDTO[]> {
+    return this.http
+      .get<IResponseResult<CategoryMiniDTO[]>>(
+        '/adminproduct/get-category-path/' + id
       )
       .pipe(
         map((res) => {
@@ -164,7 +173,24 @@ export class ProductService {
           else return this.errorHandler.handleServerUnsuccess(res, null);
         }),
         catchError(
-          this.errorHandler.handleError<CategoryForEditDTO>(
+          this.errorHandler.handleError<CategoryMiniDTO[]>(
+            `دریافت مسیر کتگوری :${id}`
+          )
+        )
+      );
+  }
+  getCategoryDetail(id: number): Observable<CategoryDetailDTO> {
+    return this.http
+      .get<IResponseResult<CategoryDetailDTO>>(
+        '/adminproduct/get-category-detail/' + id
+      )
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(
+          this.errorHandler.handleError<CategoryDetailDTO>(
             `دریافت اطلاعات کتگوری :${id}`
           )
         )
@@ -188,42 +214,195 @@ export class ProductService {
       );
   }
 
-  public GetCategoryChildren(id: number): Observable<CategoryDTO[]> {
-    console.log('getting sub categories from server', id);
+  public GetCategoryChildren(id:number):Observable<CategoryDTO[]>{
     return this.http
-      .get<IResponseResult<CategoryDTO[]>>('/products/child-categories/' + id)
-      .pipe(
-        map((res) => {
-          if (res.eStatus === Status.Success) return res.data;
-          // if (res.eStatus === Status.NotFound)
-          else return this.errorHandler.handleServerUnsuccess(res, null);
-        }),
-        catchError(
-          this.errorHandler.handleError<CategoryDTO[]>(
-            `دریافت فرزندان کتگوری : ${id}`
-          )
+    .get<IResponseResult<CategoryDTO[]>>('/product/child-categories/' + id)
+    .pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return res.data;
+        // if (res.eStatus === Status.NotFound)
+        else return this.errorHandler.handleServerUnsuccess(res, null);
+      }),
+      catchError(
+        this.errorHandler.handleError<CategoryDTO[]>(
+          `دریافت فرزندان کتگوری : ${id}`
         )
-      );
-  }
-
-  public GetCategoryTree(): Observable<CategoryTreeItemDTO[]> {
-    return this.http
-      .get<IResponseResult<CategoryTreeItemDTO[]>>('/adminproduct/get-tree')
-      .pipe(
-        map((res) => {
-          if (res.eStatus === Status.Success) return res.data;
-          // if (res.eStatus === Status.NotFound)
-          else return this.errorHandler.handleServerUnsuccess(res, null);
-        }),
-        catchError(
-          this.errorHandler.handleError<CategoryTreeItemDTO[]>(
-            `دریافت کامل کتگوری`
-          )
-        )
-      );
+      )
+    );
   }
   //#endregion
   //---------------------------------------
+  //#region attrib
+  getFilteredAttributes(filter: AttribDatasourceDTO): Observable<AttribDatasourceDTO> {
+    let params;   
+    if (filter !== null) {
+      params = new HttpParams()
+        .set('pageIndex', filter.pageIndex.toString())
+        .set('pageSize', filter.pageSize.toString());
+
+      if (filter.text)
+        params = params.append('text', filter.text);
+      if(filter.typeId)
+        params=params.append('typeId',filter.typeId);
+    }
+    return this.http.get<IResponseResult<AttribDatasourceDTO>>('/adminproduct/filter-attributes', { params })
+    .pipe(
+      map(res=>{
+        if(res.eStatus===Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res,null);
+      }),
+      catchError(this.errorHandler.handleError<AttribDatasourceDTO>('دریافت فیلتر ویژگی ها'))
+    );    
+  }
+
+  addAttrib_returnId(attrib: AttribDTO): Observable<AttribDTO> {
+    return this.http
+      .post<IResponseResult<any>>('/adminproduct/add-attrib-retId', attrib)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;          
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(this.errorHandler.handleError<AttribDTO>(`ثبت ویژگی جدید : ${attrib.title}`))
+      );
+  }
+
+  getAttribDetail(id: number): Observable<AttribDTO> {
+    return this.http
+      .get<IResponseResult<AttribDTO>>( '/adminproduct/get-attrib-detail/' + id)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(this.errorHandler.handleError<AttribDTO>(`دریافت اطلاعات ویژگی :${id}`))
+      );
+  }
+
+  editAttrib(item: AttribDTO): Observable<boolean> {
+    return this.http
+      .post<IResponseResult<any>>('/adminproduct/edit-attrib', item)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return true;
+          else return this.errorHandler.handleServerUnsuccess(res, false);
+        }),
+        catchError(this.errorHandler.handleError<boolean>(`ویرایش اطلاعات ویژگی : ${item.id}`))
+      );
+  }
+
+  deleteAttrib(id: number): Observable<boolean> {
+    return this.http.get<IResponseResult<any>>('/adminproduct/delete-attrib/' + id).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`حذف ویژگی:${id}`))
+    );
+  }
+
+  getAttribTypes(): Observable<AttribTypeDTO[]> {
+    return this.http.get<IResponseResult<any>>('/adminproduct/get-attrib-types').pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res, null);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`دریافت انواع ویژگی`))
+    );
+  }
+
+  getAttribsList(): Observable<AttribMiniDTO[]> {
+    return this.http.get<IResponseResult<any>>('/adminproduct/get-attrib-list').pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res, null);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`دریافت لیست ویژگی ها`))
+    );
+  }
+  //#endregion
+//-------------------------  
+  //#region attrib-value
+
+  getFilteredAttribValues(filter: ValueDatasource): Observable<ValueDatasource> {
+    let params;   
+    if (filter !== null) {
+      params = new HttpParams()
+        .set('pageIndex', filter.pageIndex.toString())
+        .set('pageSize', filter.pageSize.toString());
+
+      if (filter.text)
+        params = params.append('text', filter.text);
+      if(filter.AttribId)
+        params=params.append('attribId',filter.AttribId);
+    }
+    return this.http.get<IResponseResult<ValueDatasource>>('/adminproduct/filter-attrib-values', { params })
+    .pipe(
+      map(res=>{
+        if(res.eStatus===Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res,null);
+      }),
+      catchError(this.errorHandler.handleError<ValueDatasource>('دریافت فیلتر مقدار ها'))
+    );    
+  }
+
+  addAttribValue_returnId(item: ValueDTO): Observable<ValueDTO> {
+    return this.http
+      .post<IResponseResult<any>>('/adminproduct/add-attrib-value-retId', item)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;          
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(this.errorHandler.handleError<ValueDTO>(`ثبت مقدار جدید : ${item.title}`))
+      );
+  }
+
+  getAttribValueDetail(id: number): Observable<ValueDTO> {
+    return this.http
+      .get<IResponseResult<ValueDTO>>( '/adminproduct/get-attrib-value-detail/' + id)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(this.errorHandler.handleError<ValueDTO>(`دریافت اطلاعات مقدار :${id}`))
+      );
+  }
+
+  editAttribValue(item: ValueDTO): Observable<boolean> {
+    return this.http
+      .post<IResponseResult<any>>('/adminproduct/edit-attrib-value', item)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return true;
+          else return this.errorHandler.handleServerUnsuccess(res, false);
+        }),
+        catchError(this.errorHandler.handleError<boolean>(`ویرایش مقدار : ${item.id}`))
+      );
+  }
+
+  deleteAttribValue(id: number): Observable<boolean> {
+    return this.http.get<IResponseResult<any>>('/adminproduct/delete-attrib-value/' + id).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`حذف مقدار ویژگی:${id}`))
+    );
+  }
+
+  getAttribValuesList(id?:number): Observable<ValueDTO[]> {
+    return this.http.get<IResponseResult<any>>('/adminproduct/get-attrib-values-list/' + id).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res, null);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`دریافت لیست مقادیر ویژگی ` + id))
+    );
+  }
+  //#endregion
+  //-------------------------------------------------------------------
   //#region gallery
 
   getProductGalleries(productId: number): Observable<ProductGalleryMiniDTO[]> {
