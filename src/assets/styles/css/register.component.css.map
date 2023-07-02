@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../../../app/modules/user/register/register.component.scss"
-    ],
-    "names": [],
-    "file": "register.component.css"
-}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"register.component.css"}

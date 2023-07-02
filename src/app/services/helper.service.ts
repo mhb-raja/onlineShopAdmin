@@ -13,10 +13,7 @@ import * as moment from 'jalali-moment';
 export class HelperService {
   constructor(private snackBar: MatSnackBar) {}
 
-  showSnackbar(
-    message: string,
-    action: string = 'OK',
-    duration = 5000,
+  showSnackbar(message: string, action: string = 'OK', duration = 5000,
     verticalPorsition: MatSnackBarVerticalPosition = 'top',
     horizontalPosition: MatSnackBarHorizontalPosition = 'center'
   ) {
@@ -26,13 +23,15 @@ export class HelperService {
       horizontalPosition: horizontalPosition,
     });
   }
+  // private showSnackbar(message: string, duration=5000) {
+  //   this.snackBar.open(message, 'OK', { duration: duration });
+  //   //this.messageService.add(`HeroService: ${message}`);
+  // }
 
   getGeorgianDate(persianStringDate: string): Date {
     if (!persianStringDate) return null;
 
-    const x = moment(persianStringDate, 'jYYYY/jM/jD HH:mm').format(
-      'YYYY-M-D HH:mm:ss'
-    );
+    const x = moment(persianStringDate, 'jYYYY/jM/jD HH:mm').format('YYYY-M-D HH:mm:ss');
     const y = moment
       .from(persianStringDate, 'fa', 'YYYY/M/D HH:mm')
       .locale('en')

@@ -14,7 +14,7 @@ export class Interceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = this.cookieService.get(cookieString);//'Eshop-cookie'); 
-        console.log('req=',req.url);
+        console.log('~~~~~~~~~~~~~req=',req.url);
         
         const myRequest = req.clone({
             url: DomainName + req.url,

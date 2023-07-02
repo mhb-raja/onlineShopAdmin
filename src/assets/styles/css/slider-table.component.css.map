@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAMA,AANA,4BAM4B,EAQ5B,wBAAwB,CAdP;EACf,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;CACxB;;AAED,AAAA,4BAA4B,CAAC;EAC3B,MAAM,EAAE,GAAG;CAKZ;;AAND,AAGE,4BAH0B,CAG1B,GAAG,CAAC;EACF,SAAS,EAAE,IAAI;CAChB;;AAGH,AAAA,wBAAwB,CAAC;EAEvB,MAAM,EAAE,eAAe;EACvB,OAAO,EAAE,GAAG;EACZ,MAAM,EAAE,GAAG;EAEX,IAAI,EAAE,OAAO;CAOd;;AAbD,AAQE,wBARsB,CAQtB,GAAG,CAAC;EAEF,MAAM,EAAE,IAAI;EACZ,SAAS,EAAE,KAAK;CACjB;;AAGH,AAAA,oBAAoB,CAAC;EACnB,SAAS,EAAE,CAAC;EACZ,OAAO,EAAE,IAAI;CACd",
-    "sources": [
-        "../../../app/modules/sliders/slider-table/slider-table.component.scss"
-    ],
-    "names": [],
-    "file": "slider-table.component.css"
-}
+{"version":3,"sources":["../../../app/modules/sliders/slider-table/slider-table.component.scss","slider-table.component.css"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;ACCF;;ADEA;EACE,WAAA;ACCF;ADCE;EACE,eAAA;ACCJ;;ADGA;EAEE,uBAAA;EACA,YAAA;EACA,WAAA;EAEA,aAAA;ACFF;ADIE;EAEE,YAAA;EACA,gBAAA;ACHJ;;ADOA;EACE,YAAA;EACA,aAAA;ACJF","file":"slider-table.component.css"}

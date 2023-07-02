@@ -1,1 +1,26 @@
-<p>attrib-edit works!</p>
+<section class="flex-row">
+    <div class="singleColumn">
+        <a mat-raised-button [routerLink]="'../'" color="accent">برگشت به لیست</a>        
+    </div>
+</section>
+<mat-card class="card">
+    <mat-card-header >
+        <mat-card-title><a [routerLink]="'/attribs'" color="accent"> ویژگی ها</a> &raquo; 
+            ویرایش ویژگی
+        </mat-card-title>            
+    </mat-card-header>
+    <mat-card-content >
+        <form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()" class="d-flex">
+            <app-input-formfield class="flex-col" [label]="'عنوان'" [control]="title" [maxLength]="maxLenText"></app-input-formfield>
+
+            <app-select-formfield class="flex-col" [label]="'نوع داده'" [control]="typeId" [options]="attribTypeList" 
+                [defaultOptionText]="'انتخاب کنید'"></app-select-formfield>                       
+        </form>           
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button id="btnSubmit" color="primary" [disabled]="!myForm?.valid" type="submit">ثبت</button>
+    </mat-card-actions>
+</mat-card>
+
+
+

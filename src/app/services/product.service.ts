@@ -3,13 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AttribDatasourceDTO, AttribDTO, AttribMiniDTO, AttribTypeDTO } from '../DTOs/category/AttribDTO';
-import {
-  CategoryDTO,
-  CategoryDetailDTO,
-  CategoryMiniDTO,
-  //CategoryTreeItemDTO,
-} from '../DTOs/category/CategoryDTO';
-import { ValueDatasource, ValueDTO } from '../DTOs/category/ValueDTO';
+import { CategoryDTO, CategoryMiniDTO,} from '../DTOs/category/CategoryDTO';
+import { ValueDatasourceDTO, ValueDTO, ValueFullDetailDTO } from '../DTOs/category/ValueDTO';
 import { IResponseResult, Status } from '../DTOs/common/IResponseResult';
 import { ProductCommentDatasource } from '../DTOs/product/ProductCommentDTO';
 import { productDatasourceDTO, ProductDTO } from '../DTOs/product/ProductDTO';
@@ -18,6 +13,8 @@ import {
   ProductGalleryMiniDTO,
 } from '../DTOs/product/ProductGalleryDTO';
 import { ErrorHandlerService } from './error-handler.service';
+import { Attribs_forCategoryDTO, categoryAttribsChangeDTO } from '../DTOs/category/CategoryAttribDTO';
+
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +29,7 @@ export class ProductService {
 
   addProduct(prd: ProductDTO): Observable<ProductDTO> {
     return this.http
-      .post<IResponseResult<ProductDTO>>('/adminproduct/add-product', prd)
-      .pipe(
+      .post<IResponseResult<ProductDTO>>('/adminproduct/add-product', prd).pipe(
         map((res) => {
           if (res.eStatus === Status.Success) return res.data;
           // if (res.eStatus === Status.NotFound)
@@ -81,12 +77,8 @@ export class ProductService {
   }
 
   getFilteredProducts(filter: productDatasourceDTO): Observable<productDatasourceDTO> {
-    let params = this.generateProductFilterParams(filter);
-    return this.http
-      .get<IResponseResult<productDatasourceDTO>>(
-        '/adminproduct/filter-products',
-        { params }
-      )
+    let params = this.generateProductFilterParams(filter);    
+    return this.http.get<IResponseResult<productDatasourceDTO>>('/adminproduct/filter-products',{ params })
       .pipe(
         map((res) => {
           if (res.eStatus === Status.Success) return res.data;
@@ -97,32 +89,22 @@ export class ProductService {
   }
 
   generateProductFilterParams(filter: productDatasourceDTO): HttpParams {
-    let params;
-    // if (filter !== null) {
-
-    //   params = new HttpParams()
+    let params: HttpParams;
     //   for (const category of filter.categories) {
     //     params = params.append('categories', category.toString());
     //   }
-    //   if (filter.orderBy != null)
-    //     params = params.append('orderBy', filter.orderBy.toString());
-    // }
-
     if (filter !== null) {
       params = new HttpParams()
-        .set('pageIndex', filter.pageIndex.toString())
-        .set('pageSize', filter.pageSize.toString());
+        .set('pageIndex', filter.pageIndex)
+        .set('pageSize', filter.pageSize);
 
-      if (filter.text) params = params.append('text', filter.text);
-
-      // if (filter.sort)
-      //   params = params.append('sort', filter.sort);
-
-      if (filter.startPrice != null)
-        params = params.append('startPrice', filter.startPrice.toString());
-      if (filter.endPrice != null)
-        params = params.append('endPrice', filter.endPrice.toString());
+      if (filter.text) params = params.append('text', filter.text);      
+      if (filter.orderBy) params = params.append('orderBy', filter.orderBy);
+      if (filter.startPrice) params = params.append('startPrice', filter.startPrice);
+      if (filter.endPrice) params = params.append('endPrice', filter.endPrice);
+      if (filter.availableOnly != undefined) params = params.append('availableOnly', filter.availableOnly);
     }
+    console.log(filter,params)
     return params;
   }
 
@@ -135,7 +117,16 @@ export class ProductService {
       catchError(this.errorHandler.handleError<boolean>(`حذف محصول:${id}`))
     );
   }
-
+  
+  deleteProductList(idList: number[]): Observable<boolean> {
+    return this.http.put<IResponseResult<any>>('/adminproduct/delete-product-list', idList).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`حذف محصول :${idList}`))
+    );
+  }
   //#endregion
   //--------------------------------------
   //#region category
@@ -179,9 +170,9 @@ export class ProductService {
         )
       );
   }
-  getCategoryDetail(id: number): Observable<CategoryDetailDTO> {
+  getCategoryDetail(id: number): Observable<CategoryDTO> {
     return this.http
-      .get<IResponseResult<CategoryDetailDTO>>(
+      .get<IResponseResult<CategoryDTO>>(
         '/adminproduct/get-category-detail/' + id
       )
       .pipe(
@@ -190,7 +181,7 @@ export class ProductService {
           else return this.errorHandler.handleServerUnsuccess(res, null);
         }),
         catchError(
-          this.errorHandler.handleError<CategoryDetailDTO>(
+          this.errorHandler.handleError<CategoryDTO>(
             `دریافت اطلاعات کتگوری :${id}`
           )
         )
@@ -214,7 +205,7 @@ export class ProductService {
       );
   }
 
-  public GetCategoryChildren(id:number):Observable<CategoryDTO[]>{
+  getCategoryChildren(id:number):Observable<CategoryDTO[]>{
     return this.http
     .get<IResponseResult<CategoryDTO[]>>('/product/child-categories/' + id)
     .pipe(
@@ -230,11 +221,61 @@ export class ProductService {
       )
     );
   }
+
+  getCategoriesList(): Observable<CategoryDTO[]> {
+    return this.http.get<IResponseResult<CategoryDTO[]>>('/adminproduct/get-Categories-list').pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res, null);
+      }),
+      catchError(this.errorHandler.handleError<CategoryDTO[]>(`دریافت لیست دسته بندی ها`))
+    );
+  }
+
+  deleteCategory(id: number, deleteChildren?: boolean): Observable<boolean> {
+    let params;
+    if (deleteChildren !== null){
+      params = new HttpParams().set('deleteChildren', deleteChildren);
+    }
+    console.log(deleteChildren,'delete category params=deleteChildren',params)
+    return this.http.get<IResponseResult<any>>('/adminproduct/delete-category/' + id, {params}).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`حذف دسته :${id}`))
+    );
+  }
+  //#endregion
+  //---------------------------------------
+  //#region category-attrib
+  getCategoryAttribs(catId:number): Observable<Attribs_forCategoryDTO> {
+    return this.http.get<IResponseResult<Attribs_forCategoryDTO>>('/adminproduct/category-attribs/' + catId).pipe(
+      map(res=>{
+        if(res.eStatus===Status.Success) return res.data;
+        else return this.errorHandler.handleServerUnsuccess(res,null);
+      }),
+      catchError(this.errorHandler.handleError<Attribs_forCategoryDTO>(`دریافت ویژگی ها برای کتگوری : ${catId}`))
+    );
+  }
+
+  categoryAttrib_listChange(catId:number,chosenList:number[]): Observable<boolean>{
+    const temp:categoryAttribsChangeDTO={categoryId:catId, attribList:chosenList}
+    return this.http.post<IResponseResult<any>>('/adminproduct/category-attribs-list-change',temp)
+    .pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;          
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`ثبت تغییرات لیست ویژگی های کتگوری ${catId}`))
+    );
+  }
   //#endregion
   //---------------------------------------
   //#region attrib
+  
   getFilteredAttributes(filter: AttribDatasourceDTO): Observable<AttribDatasourceDTO> {
-    let params;   
+    let params;  
     if (filter !== null) {
       params = new HttpParams()
         .set('pageIndex', filter.pageIndex.toString())
@@ -242,8 +283,10 @@ export class ProductService {
 
       if (filter.text)
         params = params.append('text', filter.text);
-      if(filter.typeId)
-        params=params.append('typeId',filter.typeId);
+      if (filter.typeId)
+        params = params.append('typeId',filter.typeId);
+      if (filter.orderBy)
+        params = params.append('orderBy',filter.orderBy);
     }
     return this.http.get<IResponseResult<AttribDatasourceDTO>>('/adminproduct/filter-attributes', { params })
     .pipe(
@@ -257,7 +300,7 @@ export class ProductService {
 
   addAttrib_returnId(attrib: AttribDTO): Observable<AttribDTO> {
     return this.http
-      .post<IResponseResult<any>>('/adminproduct/add-attrib-retId', attrib)
+      .post<IResponseResult<AttribDTO>>('/adminproduct/add-attrib-retId', attrib)
       .pipe(
         map((res) => {
           if (res.eStatus === Status.Success) return res.data;          
@@ -301,30 +344,40 @@ export class ProductService {
     );
   }
 
+  deleteAttribList(idList: number[]): Observable<boolean> {
+    return this.http.put<IResponseResult<any>>('/adminproduct/delete-attrib-list', idList).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(` حذف ویژگی های:${idList}`))
+    );
+  }
+
   getAttribTypes(): Observable<AttribTypeDTO[]> {
-    return this.http.get<IResponseResult<any>>('/adminproduct/get-attrib-types').pipe(
+    return this.http.get<IResponseResult<AttribTypeDTO[]>>('/adminproduct/get-attrib-types').pipe(
       map((res) => {
         if (res.eStatus === Status.Success) return res.data;
         else return this.errorHandler.handleServerUnsuccess(res, null);
       }),
-      catchError(this.errorHandler.handleError<boolean>(`دریافت انواع ویژگی`))
+      catchError(this.errorHandler.handleError<AttribTypeDTO[]>(`دریافت انواع ویژگی`))
     );
   }
 
   getAttribsList(): Observable<AttribMiniDTO[]> {
-    return this.http.get<IResponseResult<any>>('/adminproduct/get-attrib-list').pipe(
+    return this.http.get<IResponseResult<AttribMiniDTO[]>>('/adminproduct/get-attrib-list').pipe(
       map((res) => {
         if (res.eStatus === Status.Success) return res.data;
         else return this.errorHandler.handleServerUnsuccess(res, null);
       }),
-      catchError(this.errorHandler.handleError<boolean>(`دریافت لیست ویژگی ها`))
+      catchError(this.errorHandler.handleError<AttribMiniDTO[]>(`دریافت لیست ویژگی ها`))
     );
   }
   //#endregion
 //-------------------------  
   //#region attrib-value
 
-  getFilteredAttribValues(filter: ValueDatasource): Observable<ValueDatasource> {
+  getFilteredAttribValues(filter: ValueDatasourceDTO): Observable<ValueDatasourceDTO> {
     let params;   
     if (filter !== null) {
       params = new HttpParams()
@@ -333,16 +386,18 @@ export class ProductService {
 
       if (filter.text)
         params = params.append('text', filter.text);
-      if(filter.AttribId)
-        params=params.append('attribId',filter.AttribId);
+      if(filter.attribId)
+        params=params.append('attribId',filter.attribId);
+      // if(filter.sort)
+      //   params = params.append('sort',filter.sort);
     }
-    return this.http.get<IResponseResult<ValueDatasource>>('/adminproduct/filter-attrib-values', { params })
+    return this.http.get<IResponseResult<ValueDatasourceDTO>>('/adminproduct/filter-attrib-values', { params })
     .pipe(
       map(res=>{
         if(res.eStatus===Status.Success) return res.data;
         else return this.errorHandler.handleServerUnsuccess(res,null);
       }),
-      catchError(this.errorHandler.handleError<ValueDatasource>('دریافت فیلتر مقدار ها'))
+      catchError(this.errorHandler.handleError<ValueDatasourceDTO>('دریافت فیلتر مقدار ها'))
     );    
   }
 
@@ -370,6 +425,23 @@ export class ProductService {
       );
   }
 
+  /**
+   * retrieve value detail and its attrib info by one trip to server
+   * @param id 
+   * @returns 
+   */
+  getAttribValueDetail2(id: number): Observable<ValueFullDetailDTO> {
+    return this.http
+      .get<IResponseResult<ValueFullDetailDTO>>( '/adminproduct/get-attrib-value-detail2/' + id)
+      .pipe(
+        map((res) => {
+          if (res.eStatus === Status.Success) return res.data;
+          else return this.errorHandler.handleServerUnsuccess(res, null);
+        }),
+        catchError(this.errorHandler.handleError<ValueFullDetailDTO>(`دریافت اطلاعات مقدار :${id}`))
+      );
+  }
+
   editAttribValue(item: ValueDTO): Observable<boolean> {
     return this.http
       .post<IResponseResult<any>>('/adminproduct/edit-attrib-value', item)
@@ -392,13 +464,23 @@ export class ProductService {
     );
   }
 
+  deleteAttribValueList(idList: number[]): Observable<boolean> {
+    return this.http.put<IResponseResult<any>>('/adminproduct/delete-attrib-value-list', idList).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`حذف مقدار های:${idList}`))
+    );
+  }
+
   getAttribValuesList(id?:number): Observable<ValueDTO[]> {
-    return this.http.get<IResponseResult<any>>('/adminproduct/get-attrib-values-list/' + id).pipe(
+    return this.http.get<IResponseResult<ValueDTO[]>>('/adminproduct/get-attrib-values-list/' + id).pipe(
       map((res) => {
         if (res.eStatus === Status.Success) return res.data;
         else return this.errorHandler.handleServerUnsuccess(res, null);
       }),
-      catchError(this.errorHandler.handleError<boolean>(`دریافت لیست مقادیر ویژگی ` + id))
+      catchError(this.errorHandler.handleError<ValueDTO[]>(`دریافت لیست مقادیر ویژگی ` + id))
     );
   }
   //#endregion
@@ -406,20 +488,13 @@ export class ProductService {
   //#region gallery
 
   getProductGalleries(productId: number): Observable<ProductGalleryMiniDTO[]> {
-    return this.http
-      .get<IResponseResult<ProductGalleryMiniDTO[]>>(
-        '/adminproduct/product-galleries/' + productId
-      )
+    return this.http.get<IResponseResult<ProductGalleryMiniDTO[]>>('/adminproduct/product-galleries/' + productId)
       .pipe(
         map((res) => {
           if (res.eStatus === Status.Success) return res.data;
           else return this.errorHandler.handleServerUnsuccess(res, null);
         }),
-        catchError(
-          this.errorHandler.handleError<ProductGalleryMiniDTO[]>(
-            `دریافت لیست گالری محصول ${productId}`
-          )
-        )
+        catchError(this.errorHandler.handleError<ProductGalleryMiniDTO[]>(`دریافت لیست گالری محصول ${productId}`))
       );
   }
 
@@ -462,15 +537,9 @@ export class ProductService {
 
   //#region comments
 
-  getFilteredComments(
-    filter: ProductCommentDatasource
-  ): Observable<ProductCommentDatasource> {
+  getFilteredComments(filter: ProductCommentDatasource): Observable<ProductCommentDatasource> {
     let params = this.generateCommentFilterParams(filter);
-    return this.http
-      .get<IResponseResult<ProductCommentDatasource>>(
-        '/adminproduct/filter-comments',
-        { params }
-      )
+    return this.http.get<IResponseResult<ProductCommentDatasource>>('/adminproduct/filter-comments',{ params })
       .pipe(
         map((res) => {
           if (res.eStatus === Status.Success) return res.data;
@@ -485,21 +554,29 @@ export class ProductService {
   }
 
   generateCommentFilterParams(filter: ProductCommentDatasource): HttpParams {
-    let params;
+    let params:HttpParams;
     if (filter !== null) {
       params = new HttpParams()
-        .set('onlyNotSeen', filter.onlyNotSeen)
-        .set('pageIndex', filter.pageIndex.toString())
-        .set('pageSize', filter.pageSize.toString());
+        .set('pageIndex', filter.pageIndex)
+        .set('pageSize', filter.pageSize);
+        
+    if(filter.text) params = params.append('text', filter.text)
+    if(filter.seenOnly != undefined) params = params.append('seenOnly',filter.seenOnly);
+    if(filter.approvedOnly != undefined) params = params.append('approvedOnly',filter.approvedOnly);
+    if(filter.productName) params=params.append('productName',filter.productName);
+    if(filter.productId) params = params.append('productId', filter.productId);
 
-      if (filter.text) params = params.append('text', filter.text);
-
-      // if (filter.sort)
-      //   params = params.append('sort', filter.sort);
-
-      if (filter.productId != null)
-        params = params.append('productId', filter.productId.toString());
+    // if (filter.sort)
+    //   params = params.append('sort', filter.sort);
     }
+    console.log('>>>>>> before send to server ds:',filter,'params:',params)
+    return params;
+  }
+
+  generateParamFilter(filter:any,params:HttpParams,paramName:string): HttpParams {
+    if(filter)
+      params = params.append(paramName,filter.toString());
+    console.log('generateParamFilter>>>>>>>>>>>',filter,params)
     return params;
   }
 

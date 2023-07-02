@@ -1,0 +1,31 @@
+<mat-card class="card">
+    <mat-card-header *ngIf="attrib$|async as attrib">
+        <mat-card-title><a [routerLink]="'/attribs'" color="accent"> ویژگی ها</a> &raquo; 
+            <a [routerLink]="['/attribs',attrib.id,'values']" color="accent">{{attrib.title}}</a> &raquo; 
+            ویرایش مقدار
+        </mat-card-title>            
+    </mat-card-header>
+    <mat-card-content>
+        <form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill">
+                        <mat-label>ویژگی</mat-label>
+                        <mat-select formControlName="attribId">
+                            <mat-option>انتخاب کنید</mat-option>
+                            <mat-option  *ngFor="let item of attribList$| async" [value]="item.id">{{item.title}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="myForm.controls['attribId'].hasError('required')">
+                            انتخاب ویژگی الزامی است
+                        </mat-error>                         
+                    </mat-form-field>
+                </div>
+            </div>            
+            <app-input-formfield [label]="'مقدار'" [control]="title" [maxLength]="maxLenText"></app-input-formfield>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button id="btnSubmit" color="primary" [disabled]="!myForm?.valid" type="submit">ثبت</button>
+        <button mat-raised-button color="accent" type="button" (click)="discard()">انصراف</button>
+    </mat-card-actions>
+</mat-card>

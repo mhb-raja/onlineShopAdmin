@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,eAAe,CAAC;EACZ,OAAO,EAAE,IAAI;CA0BhB;;AA3BD,AAGI,eAHW,CAGX,aAAa,CAAC;EACV,MAAM,EAAE,OAAO;EACf,MAAM,EAAE,iBAAiB;CAqB5B;;AA1BL,AAOQ,eAPO,CAGX,aAAa,CAIT,cAAc,CAAC;EACX,MAAM,EAAE,GAAG,CAAC,MAAM,CAAC,OAAe;EAClC,aAAa,EAAE,GAAG;CACrB;;AAVT,AAYQ,eAZO,CAGX,aAAa,CAST,aAAa,CAAC;EACV,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,eAAe;EACvB,SAAS,EAAE,eAAe;EAC1B,WAAW,EAAE,eAAe;EAC5B,OAAO,EAAE,sBAAsB;EAC/B,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;CAC1B;;AApBT,AAqBQ,eArBO,CAGX,aAAa,CAkBT,gBAAgB,CAAC;EACb,KAAK,EAAE,eAAe;EACtB,MAAM,EAAE,eAAe;EACvB,SAAS,EAAE,eAAe;CAC7B",
-    "sources": [
-        "../../../app/modules/products/product-gallery/product-gallery.component.scss"
-    ],
-    "names": [],
-    "file": "product-gallery.component.css"
-}
+{"version":3,"sources":["../../../app/modules/products/product-gallery/product-gallery.component.scss","product-gallery.component.css"],"names":[],"mappings":"AAAA;EACI,aAAA;ACCJ;ADCI;EACI,WAAA;EAEA,kBAAA;ACAR;ADEQ;EACI,sBAAA;EACA,kBAAA;ACAZ;ADGQ;EACI,kBAAA;EACA,SAAA;EACA,OAAA;EACA,YAAA;ACDZ;ADGQ;EACI,WAAA;EACA,uBAAA;EACA,0BAAA;EACA,yBAAA;EACA,wBAAA;EACA,8BAAA;EACA,kCAAA;ACDZ;ADIQ;EACI,sBAAA;EACA,uBAAA;EACA,0BAAA;ACFZ;;ADQA;EACI,WAAA;EACA,YAAA;ACLJ","file":"product-gallery.component.css"}

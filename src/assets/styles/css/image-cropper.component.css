@@ -5,7 +5,6 @@
 }
 
 .input-file {
-  background: #e6e6e6;
+  background: rgb(230, 230, 230);
   padding: 1em;
-}
-/*# sourceMappingURL=image-cropper.component.css.map */
+}/*# sourceMappingURL=image-cropper.component.css.map */

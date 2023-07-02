@@ -12,7 +12,6 @@
 }
 
 .row .col input.filebg {
-  background: #e6e6e6;
+  background: rgb(230, 230, 230);
   padding: 1em;
-}
-/*# sourceMappingURL=product-add.component.css.map */
+}/*# sourceMappingURL=product-add.component.css.map */

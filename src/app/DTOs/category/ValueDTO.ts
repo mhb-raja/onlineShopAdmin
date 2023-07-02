@@ -1,12 +1,19 @@
 import { GenericDatasource } from "../common/GenericDatasource";
 
 export interface ValueDTO{
-    id: number;
-    title: string;
-    attribId: number;
-  }
+  id: number;
+  title: string;
+  attribId: number;
+}
 
-  export interface ValueDatasource extends GenericDatasource<ValueDTO>{
-    text?: string;
-    AttribId?:number
-  }
+export interface ValueFullDetailDTO extends ValueDTO{
+  attribTitle: string;
+  attribType: string;
+}
+
+export interface ValueDatasourceDTO extends GenericDatasource<ValueDTO>{
+  text?: string;
+  attribId?:number;
+  attribTitle:string;
+  attribType:string
+}

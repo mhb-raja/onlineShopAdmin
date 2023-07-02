@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AA4BA,AAAA,cAAc,CAAC;EAGX,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;CACd;;AACD,AAAA,SAAS,CAAC,qBAAqB,CAAC,2BAA2B,CAAC;EAC1D,QAAQ,EAAE,QAAQ;EAClB,KAAK,EAAE,KAAK;EACZ,GAAG,EAAE,IAAI;EACT,KAAK,EAAE,KAAK;EACZ,OAAO,EAAE,IAAI;CAEd",
-    "sources": [
-        "../../../app/modules/sliders/slider-edit/slider-edit.component.scss"
-    ],
-    "names": [],
-    "file": "slider-edit.component.css"
-}
+{"version":3,"sources":["../../../app/modules/sliders/slider-edit/slider-edit.component.scss","slider-edit.component.css"],"names":[],"mappings":"AA4BA;EAGE,YAAA;AC7BF;;ADiCA;EACE,kBAAA;EACA,YAAA;EACA,SAAA;EACA,YAAA;EACA,aAAA;AC9BF","file":"slider-edit.component.css"}

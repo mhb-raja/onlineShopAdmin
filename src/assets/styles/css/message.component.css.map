@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,4CAA4C;AAC5C,AAAA,EAAE,CAAC;EACC,KAAK,EAAE,OAAO;EACd,WAAW,EAAE,4BAA4B;EACzC,WAAW,EAAE,OAAO;CACrB;;AAED,AAAA,MAAM,CAAC;EACL,KAAK,EAAE,IAAI;EACX,gBAAgB,EAAE,IAAI;EACtB,aAAa,EAAE,IAAI;EACnB,OAAO,EAAE,OAAO;EAChB,aAAa,EAAE,GAAG;CAEnB;;AACD,AAAA,MAAM,AAAA,MAAM,CAAC;EACX,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,OAAO;CAC1B",
-    "sources": [
-        "../../../app/shared/widgets/message/message.component.scss"
-    ],
-    "names": [],
-    "file": "message.component.css"
-}
+{"version":3,"sources":["../../../app/shared/widgets/message/message.component.scss","message.component.css"],"names":[],"mappings":"AAAA,2CAAA;AACA;EACI,cAAA;EACA,yCAAA;EACA,oBAAA;ACCJ;;ADEE;EACE,WAAA;EACA,sBAAA;EACA,mBAAA;EACA,gBAAA;EACA,kBAAA;ACCJ;;ADEE;EACE,YAAA;EACA,yBAAA;ACCJ","file":"message.component.css"}

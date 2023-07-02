@@ -1,0 +1,51 @@
+<h3 mat-dialog-title>انتخاب و تغییر عکس محصول{{ myratio }}</h3>
+<input type="file" class="input-file" (change)="fileChangeEvent($event)" />
+
+<div *ngIf="sourceImageDimensions">
+    <p>source image dimensions: width={{sourceImageDimensions.width}} * height:{{sourceImageDimensions.height}}</p>
+</div>
+<div >
+    <div *ngIf="croppedImage" class="d-flex">        
+        <button type="button" (click)="rotateLeft()"><mat-icon matSuffix>rotate_90_degrees_ccw</mat-icon></button>
+        <button type="button" (click)="rotateRight()"><mat-icon matSuffix>rotate_90_degrees_cw</mat-icon></button>
+        <button type="button" (click)="flipHorizontal()"><mat-icon matSuffix>flip</mat-icon></button>
+        <button type="button" (click)="flipVertical()">v<mat-icon matSuffix></mat-icon></button>
+        <button (click)="toggleContainWithinAspectRatio()">{{containWithinAspectRatio?'Fill Aspect Ratio':'Contain Within Aspect Ratio'}}</button>
+        <button (click)="resetImage()">Reset image</button>
+    </div>
+    <image-cropper class="my-cropper" 
+        [imageChangedEvent]="imageChangedEvent" 
+        [maintainAspectRatio]="true"
+        [aspectRatio]="myratio" 
+        [cropperMinWidth]="128" 
+        [cropperMaxWidth]="800"
+        [cropperMaxHeight]="800"
+        (imageCropped)="imageCropped($event)"
+        format="jpeg"
+              
+
+        [containWithinAspectRatio]="containWithinAspectRatio"
+        
+        [onlyScaleDown]="true"
+        [roundCropper]="false"
+        [canvasRotation]="canvasRotation"
+        [transform]="transform"
+        [alignImage]="'left'"
+        [style.display]="showCropper ? null : 'none'"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady($event)"
+        (loadImageFailed)="loadImageFailed()"
+        
+        
+        ></image-cropper>
+</div>
+<img [src]="croppedImage" style="width: 40%;" [style.border]="croppedImage ? '1px solid black' : 'none'" />
+
+
+<div *ngIf="croppedImageBase64" class="col-md-4 my-2">
+    <h4>تصویر نتیجه:</h4>
+    <p>ابعاد w:{{ croppedImageData.width }} x h:{{ croppedImageData.height }}</p>
+    <img [src]="croppedImageBase64" alt="cropped" />
+</div>

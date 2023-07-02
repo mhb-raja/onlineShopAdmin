@@ -33,7 +33,7 @@ export class myDynamicDatabase implements OnDestroy{
 
   /** Initial data from database */
   initialData(): Observable<DynamicFlatNode[]> {
-      return this.productService.GetCategoryChildren(-1).pipe(
+      return this.productService.getCategoryChildren(-1).pipe(
         take(1),
         //takeUntil(componentDestroyed(this)),
         map(items=>{
@@ -63,17 +63,17 @@ export class myDynamicDatabase implements OnDestroy{
   //   } 
   // }
   getChildren(node: DynamicFlatNode): Observable<CategoryDTO[]> {    
-    if (this.myDataMap.get(node.item.id).children != null) {      
-      return of(this.myDataMap.get(node.item.id).children);
-    } else {      
-      return this.productService.GetCategoryChildren(node.item.id).pipe(
+    // if (this.myDataMap.get(node.item.id).children != null) {      
+    //   return of(this.myDataMap.get(node.item.id).children);
+    // } else {      
+      return this.productService.getCategoryChildren(node.item.id).pipe(
         take(1),
         // takeUntil(componentDestroyed(this)),
         tap(items=>items.map(ctg=>this.myDataMap.set(ctg.id,ctg))),
         // tap(items=>          
         //   this.myDataMap.get(node.item.id).children=items),        
       );        
-    } 
+    // } 
   }
 
   isExpandable(node: number): boolean {

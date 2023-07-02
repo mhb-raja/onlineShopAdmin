@@ -1,32 +1,38 @@
 import { GenericDatasource } from "../common/GenericDatasource";
 
-export interface ProductDTO {
+export interface ProductMiniDTO {
     id: number,
     productName: string,
-    urlCodeFa: string,
     price: number,
-    shortDescription: string,
-    description: string,
     base64Image: string,
     isAvailable: boolean,
-    categoryId: number,
-    categoryTitle?: string
+    categoryTitle?: string,
+    urlCodeFa: string,
 }
 
-export interface productDatasourceDTO extends GenericDatasource<ProductDTO> {
-    text: string;
-    startPrice: number,
-    endPrice: number,
+export interface ProductDTO extends ProductMiniDTO {    
+    shortDescription: string,
+    description: string,
+    categoryId: number,
+}
+
+export interface productDatasourceDTO extends GenericDatasource<ProductMiniDTO> {
+    text?: string;
+    startPrice?: number,
+    endPrice?: number,
     maxPrice: number,
-    availableOnly:boolean,
-    categories: number[],
-    orderBy: ProductOrderBy
+    availableOnly?:boolean,
+    categories?: number[],
+    orderBy?: ProductOrderBy
 }
 
 export enum ProductOrderBy {
     PriceAsc = 1,
     PriceDesc = 2,
-    CreateDateAsc = 3,
-    CreateDateDesc = 4,
+    TitleAsc = 3,
+    TitleDesc = 4,
+    // CreateDateAsc = 3,
+    // CreateDateDesc = 4,
+
     IsSpecial = 5
 }

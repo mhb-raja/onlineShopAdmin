@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
+  <mat-sidenav #drawer class="sidenav"  fixedTopGap 
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
@@ -62,12 +62,8 @@
           
         </mat-expansion-panel>
       </mat-accordion>  
-           
-
-      <a mat-list-item [routerLink]="['/ng']">test</a>
-      <a mat-list-item [routerLink]="['/categories/tree']">tree</a>
-      <a mat-list-item [routerLink]="['/dyamic']">dynamic</a>
-        
+      <a mat-list-item [routerLink]="['/categories/checklist']">tree checklist</a>
+      <a mat-list-item [routerLink]="['/categories/treecheck']">my tree checklist</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

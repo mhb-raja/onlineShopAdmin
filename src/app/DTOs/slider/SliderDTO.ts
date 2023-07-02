@@ -11,3 +11,4 @@ export class SliderDTO extends SliderMiniDTO {
     activeUntil?: Date;
 }
 
+

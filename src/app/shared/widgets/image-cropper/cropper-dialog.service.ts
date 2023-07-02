@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -48,9 +48,41 @@ export class CropperDialogService {
   async open(ratio:number): Promise<string | null>{
     // Lazy load the image crop modal (an Angular Ivy feature)
     const { ImageCropperComponent } = await import(`./image-cropper.component`);
+    /**
+     * let config = new MatDialogConfig();
+    config = {
+      position: {
+        top: '10px',
+        right: '10px'
+      },
+      height: '98%',
+      width: '100vw',
+      panelClass: 'full-screen-modal',
+    };
+     */
+    
 
     this.dialogRef = await this.dialog.open(ImageCropperComponent, {
-      width: '850px',
+      //width: '850px',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
+      height: '100%',
+      width: '100%',
+      data: { aspectRatio: ratio, imageBase64: null },
+    });    
+    return await this.dialogRef.afterClosed().toPromise();
+  }
+
+  async open2(ratio:number): Promise<string | null>{
+    // Lazy load the image crop modal (an Angular Ivy feature)
+    const { CropperComponent } = await import(`./cropper/cropper.component`);
+
+    this.dialogRef = await this.dialog.open(CropperComponent, {
+      //width: '850px',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
+      height: '100%',
+      width: '100%',
       data: { aspectRatio: ratio, imageBase64: null },
     });    
     return await this.dialogRef.afterClosed().toPromise();

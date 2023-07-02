@@ -7,15 +7,17 @@
 //     ) { }
 // }
 
+import { Observable } from "rxjs";
+import { AttribDTO } from "../category/AttribDTO";
+
 // export abstract class GenericDatasource<T> {
 //     items: T[];
 //     paginator: Paginator;
 // }
 
 export interface GenericDatasource<T> {
-    items: T[];
-    //paginator: Paginator;
-    pageSize: number,
     pageIndex: number,
-    totalItems: number
+    pageSize: number,    
+    totalItems: number,
+    items: T[];
 }

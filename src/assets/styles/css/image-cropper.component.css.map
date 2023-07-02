@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,WAAW,CAAC;EACR,uBAAuB,CAAA,sBAAC;EACxB,uBAAuB,CAAA,qBAAC;EAExB,OAAO,EAAE,GAAG;CACf;;AAED,AAAA,WAAW,CAAA;EACP,UAAU,EAAE,OAAsB;EAClC,OAAO,EAAE,GAAG;CACf",
-    "sources": [
-        "../../../app/shared/widgets/image-cropper/image-cropper.component.scss"
-    ],
-    "names": [],
-    "file": "image-cropper.component.css"
-}
+{"version":3,"sources":["../../../app/shared/widgets/image-cropper/image-cropper.component.scss","image-cropper.component.css"],"names":[],"mappings":"AAAA;EACI,8CAAA;EACA,6CAAA;EAEA,YAAA;ACAJ;;ADGA;EACI,8BAAA;EACA,YAAA;ACAJ","file":"image-cropper.component.css"}

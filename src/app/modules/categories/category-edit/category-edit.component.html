@@ -1,1 +1,29 @@
-<p>category-edit works!</p>
+<section class="flex-row">
+    <div class="singleColumn">
+        <a mat-raised-button [routerLink]="'/categories'" color="accent">برگشت به لیست</a>        
+    </div>
+</section>
+<mat-card class="card" >
+    <mat-card-header >
+        <mat-card-title><a [routerLink]="['/categories']">دسته بندی ها</a> / ویرایش دسته </mat-card-title>        
+    </mat-card-header>
+    <mat-card-content>
+        <form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()" class="flex-col">            
+            <app-input-formfield [label]="'عنوان'" [control]="title" [maxLength]="maxLenText"></app-input-formfield>
+            <app-input-formfield [label]="'عنوان در URL'" [control]="urlTitle" [maxLength]="maxLenText"></app-input-formfield>
+            <div class="row">
+                <div class="col">
+                    <app-category-tree-clientside [selectedCategory]="dbData" [selectingMode]="true" 
+                        cardTitle="انتخاب دسته پدر" (categorySelected)="setParentId($event)"></app-category-tree-clientside>
+                    <mat-error *ngIf="parentId.hasError('invalidParent') && (myForm.touched || myForm.dirty)">
+                        دسته بندی پدر را انتخاب کنید
+                    </mat-error>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button id="btnSubmit" color="primary" [disabled]="!myForm?.valid" type="submit">ثبت</button>
+    </mat-card-actions>
+</mat-card>
+

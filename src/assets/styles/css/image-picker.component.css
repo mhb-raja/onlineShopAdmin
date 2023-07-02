@@ -5,7 +5,7 @@
   margin-top: 10px;
 }
 
-input[type='file'] {
+input[type=file] {
   display: none;
 }
 
@@ -15,10 +15,8 @@ button {
   width: 100%;
   height: 100%;
 }
-
 button ion-icon {
   display: inline-block;
   font-size: 2rem;
   padding: 20px !important;
-}
-/*# sourceMappingURL=image-picker.component.css.map */
+}/*# sourceMappingURL=image-picker.component.css.map */

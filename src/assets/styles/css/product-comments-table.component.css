@@ -1,8 +1,7 @@
 .read-grayBg {
-  background-color: #c7c7c7;
+  background-color: rgb(199, 199, 199);
 }
 
 .unread {
   font-weight: bold;
-}
-/*# sourceMappingURL=product-comments-table.component.css.map */
+}/*# sourceMappingURL=product-comments-table.component.css.map */

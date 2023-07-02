@@ -1,0 +1,79 @@
+<mat-card class="card">
+  <mat-card-header>
+      <mat-card-title>{{cardTitle}}</mat-card-title>
+      <button mat-flat-button (click)="expandAll()">
+        <mat-icon>{{toggleExpandAll ? 'expand_less' : 'expand_more'}}</mat-icon>
+      </button>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+
+    <mat-checkbox *ngIf="selectingMode" class="checklist-leaf-node" [(ngModel)]="rootSelected" (change)="addToRoot()">
+      ریشه
+    </mat-checkbox>
+
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
+        [ngClass]="{'highlight': selectingMode && selectedCategory?.urlTitle === node.item.urlTitle}">        
+        <button mat-icon-button disabled>.</button>
+        <mat-checkbox *ngIf="selectingMode" class="checklist-leaf-node"
+                      [checked]="selection.isSelected(node)"
+                      (change)="nodeSelectionChanged(node)">{{node.item.title}} / {{node.item.urlTitle}}</mat-checkbox>
+        
+        <span *ngIf="!selectingMode">{{node.item.title}}  - {{node.item.urlTitle}}        
+          <button mat-stroked-button [routerLink]="['/categories/edit',node.item.id]" matTooltip="ویرایش">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-stroked-button [routerLink]="['/category-attribute',node.item.id]" matTooltip="ویژگیهای این دسته">
+            <mat-icon color="primary" >fact_check</mat-icon>
+          </button>
+          <button mat-stroked-button color="warn" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="removeElement(node)">
+                  <mat-icon>delete_forever</mat-icon>
+                  <span>حذف</span>
+              </button>                          
+          </mat-menu>
+        </span>
+        
+      </mat-tree-node>    
+
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
+        [ngClass]="{'highlight': selectingMode && selectedCategory?.urlTitle === node.item.urlTitle}">
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.item">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        <mat-checkbox *ngIf="selectingMode" [checked]="selection.isSelected(node)"                    
+                      (change)="nodeSelectionChanged(node)">{{node.item.title}} / {{node.item.urlTitle}}</mat-checkbox>
+        
+        <span *ngIf="!selectingMode">{{node.item.title}} - {{node.item.urlTitle}}        
+          <button mat-stroked-button [routerLink]="['/categories/edit',node.item.id]" matTooltip="ویرایش">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-stroked-button [routerLink]="['/category-attribute',node.item.id]" matTooltip="ویژگیها">
+            <mat-icon>fact_check</mat-icon>
+          </button>
+          <button mat-raised-button color="warn" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="removeElement(node)">
+                  <mat-icon>delete_forever</mat-icon>
+                  <span>حذف</span>
+              </button>                          
+          </mat-menu>
+        </span>
+      </mat-tree-node>
+
+    </mat-tree>
+  </mat-card-content>
+</mat-card>
+
+
+
+  

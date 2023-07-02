@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../../../app/modules/user/login/login.component.scss"
-    ],
-    "names": [],
-    "file": "login.component.css"
-}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"login.component.css"}

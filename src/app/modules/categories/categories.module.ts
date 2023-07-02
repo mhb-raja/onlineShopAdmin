@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { CategoryAddComponent } from './category-add/category-add.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CategoryTreeComponent } from './category-tree/category-tree.component';
-import { AttribSearchComponent } from './attrib-search/attrib-search.component';
+// import CategoryTreeClientsideComponent from './category-tree-clientside/category-tree-clientside.component';
+import { TreeChecklistExampleComponent } from './tree-checklist-example/tree-checklist-example.component';
+import { CategoryTreeChecklistComponent } from './category-tree-checklist/category-tree-checklist.component';
+import { CategoryDashboardComponent } from './category-dashboard/category-dashboard.component';
+import { CategoryTreeClientsideComponent } from './category-tree-clientside/category-tree-clientside.component';
+import { CategoryDeleteOptionsDialogComponent } from './category-delete-options-dialog/category-delete-options-dialog.component';
 
 const routes: Routes = [
-  { path: '', component: CategoryTreeComponent },
-  { path: 'add/:parentId', component: CategoryAddComponent },
+  
+  { path: 'add', component: CategoryAddComponent },
   { path: 'edit/:id', component: CategoryEditComponent },
-  {path:'tree',component:CategoryTreeComponent}
+  { path: 'tree',component:CategoryTreeComponent },
+  { path:'clientside',component:CategoryTreeClientsideComponent},
+  { path:'checklist', component:TreeChecklistExampleComponent},
+  { path:'treecheck',component:CategoryTreeChecklistComponent},
+  { path: '', component: CategoryDashboardComponent },
 ]
 
 @NgModule({
@@ -21,15 +27,15 @@ const routes: Routes = [
     CategoryAddComponent,
     CategoryEditComponent,
     CategoryTreeComponent,
-    AttribSearchComponent
+    CategoryTreeClientsideComponent,
+    TreeChecklistExampleComponent,
+    CategoryTreeChecklistComponent,
+    CategoryDashboardComponent,
+    CategoryDeleteOptionsDialogComponent
   ],
   imports: [
-    //CommonModule,
     SharedModule,
-    RouterModule.forChild(routes),
-    
-    //MaterialModule,
-    //ReactiveFormsModule, FormsModule,
+    RouterModule.forChild(routes),  
   ],
   exports: [RouterModule]
 })

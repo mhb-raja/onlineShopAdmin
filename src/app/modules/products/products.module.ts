@@ -10,14 +10,21 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductGalleryComponent } from './product-gallery/product-gallery.component';
 import { ProductCommentsTableComponent } from './comments/product-comments-table/product-comments-table.component';
 import { CommentViewComponent } from './comments/comment-view/comment-view.component';
+import { CommentsTableComponent } from './comments-table/comments-table.component';
 
 const routes: Routes = [
+  
+  { path: 'dummy', component: CommentsTableComponent , data:{title:' قدیمی نظرات'}},
+  { path: 'comments', component: ProductCommentsTableComponent , data:{title:'نظرات'}},
   { path: '', component: ProductTableComponent },
   { path: 'add', component: ProductAddComponent },
-  { path: 'edit/:id', component: ProductEditComponent },
-  { path: 'gallery/:id', component: ProductGalleryComponent },
-  { path: 'comments', component: ProductCommentsTableComponent },
+  //{ path: 'edit/:id', component: ProductEditComponent },
+  { path: ':id', component: ProductEditComponent,   data:{title:'ویرایش'} },//canDeactivate:[CanDeactivateGuard],
+  
+  
+  
   { path: 'comments/:productId', component: CommentViewComponent },
+  { path: 'gallery/:id', component: ProductGalleryComponent },
 ];
 
 @NgModule({
@@ -28,11 +35,12 @@ const routes: Routes = [
     ProductGalleryComponent,
     ProductCommentsTableComponent,
     CommentViewComponent,
+    CommentsTableComponent,
   ],
   imports: [
-    CommonModule,
+    //CommonModule,
     RouterModule.forChild(routes),
-    MaterialModule,
+    //MaterialModule,
     //ReactiveFormsModule, FormsModule,
     SharedModule,
   ],

@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../../../app/shared/widgets/general-dialog/general-dialog.component.scss"
-    ],
-    "names": [],
-    "file": "general-dialog.component.css"
-}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"general-dialog.component.css"}

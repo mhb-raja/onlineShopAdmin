@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACjB,MAAM,EAAE,IAAI;CACb;;AAED,AAAA,QAAQ,CAAC;EACP,KAAK,EAAE,KAAK;CACb;;AAED,AAAA,QAAQ,CAAC,YAAY,CAAC;EACpB,UAAU,EAAE,OAAO;CACpB;;AAED,AAAA,YAAY,AAAA,YAAY,CAAC;EACvB,QAAQ,EAAE,MAAM;EAChB,GAAG,EAAE,CAAC;EACN,OAAO,EAAE,CAAC;CACX;;AAED,AAAA,eAAe,CAAA;EACb,IAAI,EAAE,QAAQ;CACf",
-    "sources": [
-        "../../../app/layouts/default/default.component.scss"
-    ],
-    "names": [],
-    "file": "default.component.css"
-}
+{"version":3,"sources":["../../../app/layouts/default/default.component.scss","default.component.css"],"names":[],"mappings":"AAAA;EACE,YAAA;ACCF;;ADEA;EACE,YAAA;EACA,eAAA;ACCF;;ADEA;EACE,mBAAA;ACCF;;ADEA;EACE,gBAAA;EACA,MAAA;EACA,UAAA;ACCF;;ADEA;EACE,cAAA;ACCF","file":"default.component.css"}

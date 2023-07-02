@@ -25,13 +25,7 @@
 
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!croppedImageBase64"
-        (click)="submit()"
-        type="submit"
-      >
+      <button mat-raised-button color="primary" [disabled]="!croppedImageBase64" (click)="submit()" type="submit" >
         ثبت
       </button>
       <button mat-button (click)="dismiss()">انصراف</button>

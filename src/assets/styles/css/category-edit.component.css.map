@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../../../app/modules/categories/category-edit/category-edit.component.scss"
-    ],
-    "names": [],
-    "file": "category-edit.component.css"
-}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"category-edit.component.css"}

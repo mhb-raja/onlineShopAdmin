@@ -12,57 +12,35 @@ import { ErrorHandlerService } from './error-handler.service';
 })
 export class SliderService {
 
-  private homeSliders: BehaviorSubject<SliderDTO[]> = new BehaviorSubject<SliderDTO[]>(null);
+  //private homeSliders: BehaviorSubject<SliderDTO[]> = new BehaviorSubject<SliderDTO[]>(null);
 
   constructor(private http: HttpClient, private errorHandler: ErrorHandlerService) { }
 
-  public getCurrentSliders(): Observable<SliderDTO[]> {
-    return this.homeSliders;
-  }
+  // public getCurrentSliders(): Observable<SliderDTO[]> {
+  //   return this.homeSliders;
+  // }
 
-  public setCurrentSliders(sliders: SliderDTO[]) {
-    this.homeSliders.next(sliders);
-  }
-  /*
-  getHeroNo404<Data>(id: number): Observable<Hero> {
-      const url = `${this.heroesUrl}/?id=${id}`;
-      return this.http.get<Hero[]>(url)
-        .pipe(
-          map(heroes => heroes[0]), // returns a {0|1} element array
-          tap(h => {
-            const outcome = h ? `fetched` : `did not find`;
-            this.log(`${outcome} hero id=${id}`);
-          }),
-          catchError(this.handleError<Hero>(`getHero id=${id}`))
-        );
-    }
-   */
+  // public setCurrentSliders(sliders: SliderDTO[]) {
+  //   this.homeSliders.next(sliders);
+  // }
 
-
-  public GetSliders(): Observable<IResponseResult<SliderDTO[]>> {
-    return this.http.get<IResponseResult<SliderDTO[]>>('/slider/GetActiveSliders');
-  }
-
-
-
-  addSlider(slider: SliderDTO): Observable<boolean> {
-    return this.http.post<IResponseResult<any>>("/slider/add-slider", slider).pipe(
-      map(res => {
-        if (res.eStatus === Status.Success)
-          return true;
-        else// if (res.eStatus === Status.NotFound)
-          return this.errorHandler.handleServerUnsuccess(res, false);
-      }),
-      catchError(this.errorHandler.handleError<boolean>(`ثبت اسلایدر جدید `))
-    );
-  }
-
-  addSlider2(slider: SliderDTO): Observable<SliderDTO> {
-    return this.http.post<IResponseResult<SliderDTO>>("/slider2/add-slider", slider).pipe(
+  public GetSliders(): Observable<SliderDTO[]> {
+    return this.http.get<IResponseResult<SliderDTO[]>>('/slider/GetActiveSliders').pipe(
       map(res => {
         if (res.eStatus === Status.Success)
           return res.data;
         else// if (res.eStatus === Status.NotFound)
+          return this.errorHandler.handleServerUnsuccess(res, null);
+      }),
+      catchError(this.errorHandler.handleError<SliderDTO[]>(`دریافت لیست اسلایدرها `))
+    );
+  }
+
+  addSlider(slider: SliderDTO): Observable<SliderDTO> {
+    return this.http.post<IResponseResult<SliderDTO>>("/slider/add-slider", slider).pipe(
+      map(res => {
+        if (res.eStatus === Status.Success) return res.data;
+        else
           return this.errorHandler.handleServerUnsuccess(res, null);
       }),
       catchError(this.errorHandler.handleError<SliderDTO>(`ثبت اسلایدر جدید `))
@@ -78,7 +56,7 @@ export class SliderService {
         else
           return this.errorHandler.handleServerUnsuccess(res, null);
       }),
-      catchError(this.errorHandler.handleError<sliderDatasourceDTO>(`دریافت لیست اسلایدرها `))
+      catchError(this.errorHandler.handleError<sliderDatasourceDTO>(`دریافت فیلتر اسلایدرها `))
     );
   }
 
@@ -87,17 +65,12 @@ export class SliderService {
 
     if (filter !== null) {
       params = new HttpParams()
-        .set('pageIndex', filter.pageIndex.toString())
+        .set('page', filter.pageIndex.toString())
         .set('pageSize', filter.pageSize.toString());
 
-      if (filter.text)
-        params = params.append('text', filter.text);
-
-      if (filter.sort)
-        params = params.append('sort', filter.sort);
-
-      if (filter.activeFromTime != null)
-        params = params.append('activeFromTime', filter.activeFromTime.toString());
+      if (filter.text) params = params.append('text', filter.text);
+      if (filter.orderBy) params = params.append('orderBy', filter.orderBy);
+      if (filter.activeFromTime != null) params = params.append('activeFromTime', filter.activeFromTime.toString());
     }
     return params;
   }
@@ -107,37 +80,22 @@ export class SliderService {
       return of(null);
     return this.http.get<IResponseResult<SliderDTO>>('/slider/get-slider-for-edit/' + id).pipe(
       map(res => {
-        if (res.eStatus === Status.Success)
-          return res.data;
-        else// if (res.eStatus === Status.NotFound)
+        if (res.eStatus === Status.Success) return res.data;
+        else
           return this.errorHandler.handleServerUnsuccess(res, null);
       }),
       catchError(this.errorHandler.handleError<SliderDTO>(`دریافت اطلاعات اسلایدر :${id}`))
     );
   }
 
-  editSlider(slider: SliderDTO): Observable<boolean> {
-    return this.http.post<IResponseResult<any>>('/slider/edit-slider', slider).pipe(
-      map(res => {
-        if (res.eStatus === Status.Success)
-          return true;
-        else// if (res.eStatus === Status.NotFound)
-          return this.errorHandler.handleServerUnsuccess(res, false);
+  editSlider(item: SliderDTO): Observable<boolean> {
+    return this.http.post<IResponseResult<any>>('/slider/edit-slider', item).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
       }),
-      catchError(this.errorHandler.handleError<boolean>(`ویرایش اطلاعات اسلایدر : ${slider.id}`))
-    );
-  }
-
-  editSlider2(slider: SliderDTO): Observable<SliderDTO> {
-    return this.http.post<IResponseResult<SliderDTO>>('/slider2/edit-slider', slider).pipe(
-      map(res => {
-        if (res.eStatus === Status.Success)
-          return res.data;
-        else// if (res.eStatus === Status.NotFound)
-          return this.errorHandler.handleServerUnsuccess(res, null);
-      }),
-      catchError(this.errorHandler.handleError<SliderDTO>(`ویرایش اطلاعات اسلایدر : ${slider.id}`))
-    );
+      catchError(this.errorHandler.handleError<boolean>(`ویرایش اطلاعات اسلایدر : ${item.id}`))
+    );      
   }
 
   deleteSlider(id: number): Observable<boolean> {
@@ -151,6 +109,16 @@ export class SliderService {
           return this.errorHandler.handleServerUnsuccess(res, false);
       }),
       catchError(this.errorHandler.handleError<boolean>(`حذف اسلایدر : ${id}`))
+    );
+  }
+
+  deleteSliderList(idList: number[]): Observable<boolean> {
+    return this.http.put<IResponseResult<any>>('/slider/delete-slider-list', idList).pipe(
+      map((res) => {
+        if (res.eStatus === Status.Success) return true;
+        else return this.errorHandler.handleServerUnsuccess(res, false);
+      }),
+      catchError(this.errorHandler.handleError<boolean>(`حذف اسلایدر های :${idList}`))
     );
   }
 }

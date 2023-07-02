@@ -4,15 +4,14 @@ label {
   font-weight: bold;
   font-size: 1.2rem;
   margin-top: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 input {
-  padding: .5rem;
+  padding: 0.5rem;
   width: 100%;
   max-width: 600px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   display: block;
 }
 
@@ -31,9 +30,8 @@ li {
   display: inline-block;
   width: 100%;
   max-width: 600px;
-  padding: .5rem;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  padding: 0.5rem;
+  box-sizing: border-box;
   text-decoration: none;
   color: black;
 }
@@ -46,5 +44,4 @@ li {
 ul.search-result {
   margin-top: 0;
   padding-left: 0;
-}
-/*# sourceMappingURL=hero-search.component.css.map */
+}/*# sourceMappingURL=hero-search.component.css.map */

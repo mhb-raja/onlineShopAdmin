@@ -5,71 +5,20 @@
                 <mat-icon>add</mat-icon>
                 ثبت ویژگی جدید
             </a>
-            <a mat-raised-button [routerLink]="['values/add']" color="primary">
+            <a mat-raised-button [routerLink]="['0/values/add']" color="primary">
                 <mat-icon>add</mat-icon>
                 ثبت مقدار جدید
             </a>
-        </div>
-        
+        </div>        
     </div>
-    <div class="table-container" *ngIf="myDatasource.items">
-
-        <div class="flex-col">
-            <table mat-table [dataSource]="myDatasource.items" multiTemplateDataRows matSort multiTemplateDataRows
-                (matSortChange)="sortData($event)" matSortActive="title" matSortDisableClear
-                matSortDirection="asc">
-                <!-- check Column -->
-                <ng-container matColumnDef="check">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-                    <td mat-cell *matCellDef="let element"><mat-checkbox ></mat-checkbox></td>
-                </ng-container>
-                <!-- id Column -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-                    <td mat-cell *matCellDef="let element">{{element.id}}</td>
-                </ng-container>
-
-                <!-- title Column -->
-                <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>عنوان</th>
-                    <td mat-cell *matCellDef="let element">{{element.title}}</td>
-                </ng-container>             
-                
-                <!-- valuesCount Column -->
-                <ng-container matColumnDef="valuesCount">
-                    <th mat-header-cell *matHeaderCellDef>مقدارها</th>
-                    <td mat-cell *matCellDef="let element">{{element.valuesCount}}</td>
-                </ng-container>
-
-                <!-- buttons column -->
-                <ng-container matColumnDef="buttons">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-raised-button color="accent" [routerLink]="['edit',element.id]">
-                            <mat-icon>mode_edit</mat-icon>
-                        </button>
-                        <button mat-raised-button color="accent" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                            <mat-icon>arrow_drop_down</mat-icon>
-                          </button>
-                          <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="removeElement(element.id)">
-                              <mat-icon>delete_forever</mat-icon>
-                              <span>حذف</span>
-                            </button>                            
-                          </mat-menu>
-                          
-                    </td>
-                </ng-container>        
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row" 
-                [routerLink]="[element.id,'values']"  ></tr>
-            </table>
-            <mat-paginator #paginator *ngIf="myDatasource.items" [length]="myDatasource.totalItems"
-                [pageIndex]="myDatasource.pageIndex" [pageSize]="myDatasource.pageSize" [pageSizeOptions]="[5, 10, 25]"
-                (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
-            </mat-paginator>
-        </div>
-    </div>
-
+    <mat-card class="card" >
+        <mat-card-header>
+            <mat-card-title>ویژگی ها   &nbsp;&nbsp;&nbsp;&nbsp; {{myDatasource?.totalItems}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>              
+            <app-table [dataSource]="myDatasource" [items$]="items$" [columns]="columns" [singleBtn]="singleBtnView" 
+                [menuButtons]="menuBtns" (clearFiltersEvent)="clearFilters()" (rowDelete)="deleteRows($event)"
+                 (pageChange)="pageChange()" (sortChange)="sortChange($event)"></app-table>
+        </mat-card-content>
+    </mat-card>
 </div>

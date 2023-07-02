@@ -1,0 +1,36 @@
+<section class="flex-row">
+    <div class="singleColumn">
+        <a mat-raised-button [routerLink]="'/categories'" color="accent">برگشت به لیست</a>        
+    </div>
+</section>
+
+<mat-card class="card" >
+    <mat-card-header >
+        <mat-card-title>
+            {{categoryTitle}}
+        </mat-card-title>            
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <button mat-raised-button color="accent" type="button" (click)="editMode=!editMode;">{{editMode?"انصراف":"تغییر"}}</button>
+        <button mat-raised-button id="btnChange" [disabled]="!editMode" color="primary" type="button" >ثبت</button>
+    </mat-card-actions>
+    <mat-card-content *ngIf="data$ | async as data">
+        <h4>جستجو</h4>                        
+        <app-input-formfield [label]="'در عنوان'" [control]="textCtrl" [maxLength]="maxLenText"></app-input-formfield>
+        <mat-selection-list color="primary" [disabled]="!editMode" [(ngModel)]="selectedList" >
+            <mat-list-option *ngFor="let item of data.chosen" [value]="item.id">
+                {{item.title}}
+            </mat-list-option>
+            
+            <mat-list-option *ngFor="let item of data.otherActiveAttribs" [value]="item.id">
+                {{item.title}}
+            </mat-list-option>
+        </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="accent" type="button" (click)="editMode=!editMode">{{editMode?"انصراف":"تغییر"}}</button>
+        <button mat-raised-button id="btnChange2" [disabled]="!editMode" color="primary" type="button" >ثبت</button>
+    </mat-card-actions>
+
+</mat-card>

@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>حذف دسته {{data.catTitle}}</h1>
+<div mat-dialog-content>
+  <h4>فرزندان این دسته بندی...</h4>
+  <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
+    <mat-radio-button [value]="true">همه حذف شوند</mat-radio-button>
+    <mat-radio-button [value]="false">به دسته پدر منتقل شوند</mat-radio-button>
+  </mat-radio-group>  
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">انصراف</button>
+  <button mat-raised-button color="warn" [disabled]="selectedOption===null" [mat-dialog-close]="selectedOption" >حذف</button>
+</div>
+
+

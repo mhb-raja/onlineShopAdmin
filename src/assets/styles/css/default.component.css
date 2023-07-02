@@ -4,6 +4,7 @@
 
 .sidenav {
   width: 200px;
+  min-width: 40px;
 }
 
 .sidenav .mat-toolbar {
@@ -11,15 +12,11 @@
 }
 
 .mat-toolbar.mat-primary {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 .toolbar-spacer {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
-}
-/*# sourceMappingURL=default.component.css.map */
+  flex: 1 1 auto;
+}/*# sourceMappingURL=default.component.css.map */

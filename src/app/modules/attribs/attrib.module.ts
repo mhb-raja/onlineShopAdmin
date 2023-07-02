@@ -8,15 +8,30 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ValueTableComponent } from './value-table/value-table.component';
 import { ValueAddComponent } from './value-add/value-add.component';
 import { ValueEditComponent } from './value-edit/value-edit.component';
+import { ValueEditInsideComponent } from './value-edit-inside/value-edit-inside.component';
+import { CanDeactivateGuard } from 'src/app/Utilities/can-deactivate.guard';
 
 const routes: Routes = [
+  // { path: '', component: AttribTableComponent },
+  // { path: 'add', component: AttribAddComponent },
+  // { path: ':id', component: AttribEditComponent }, //'edit/:id'
+  // { path: ':attribId/values/add', component: ValueAddComponent },
+  // { path: ':attribId/values', component: ValueTableComponent },
+  // { path: 'values/add', redirectTo:'0/values/add' , pathMatch: 'full' },
+  // { path: ':attribId/values/:id', component: ValueEditComponent , canDeactivate:[CanDeactivateGuard] },
+
   { path: '', component: AttribTableComponent },
   { path: 'add', component: AttribAddComponent },
-  { path: 'edit/:id', component: AttribEditComponent },  
-  { path: ':attribId/values', component: ValueTableComponent },
-  { path: ':attribId/values/add', component: ValueAddComponent },
+  { path: ':id', component: AttribEditComponent, canDeactivate:[CanDeactivateGuard],  data:{title:'ویرایش'} },
   { path: 'values/add', redirectTo:'0/values/add' , pathMatch: 'full' },
-  { path: ':attribId/values/edit/:id', component: ValueEditComponent },
+  { path: ':attribId/values', component: ValueTableComponent, 
+      children: [
+        { path: 'add', component: ValueAddComponent },        
+        { path: ':id', component: ValueEditComponent , canDeactivate:[CanDeactivateGuard]},
+      ] 
+  },
+  
+  
 ];
 
 @NgModule({
@@ -27,7 +42,8 @@ const routes: Routes = [
     ValueTableComponent,
     ValueAddComponent,
     ValueEditComponent,
+    ValueEditInsideComponent,
   ],
-  imports: [CommonModule, SharedModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, RouterModule.forChild(routes)],
 })
 export class AttribModule {}

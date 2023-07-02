@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+}
+
+.item {
+  flex: 1 200px;
+  order: 2;
+}/*# sourceMappingURL=flex.css.map */

@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../../../app/modules/products/comments/comment-view/comment-view.component.scss"
-    ],
-    "names": [],
-    "file": "comment-view.component.css"
-}
+{"version":3,"sources":[],"names":[],"mappings":"","file":"comment-view.component.css"}

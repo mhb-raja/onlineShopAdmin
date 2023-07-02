@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 const routes: Routes = [
   { path: '', component: SliderTableComponent },
   { path: 'add', component: SliderAddComponent },
-  { path: 'edit/:id', component: SliderEditComponent }
+  { path: ':id', component: SliderEditComponent }
 ]
 
 @NgModule({
@@ -22,12 +22,10 @@ const routes: Routes = [
     SliderEditComponent,
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     RouterModule.forChild(routes),
-    MaterialModule,
-    //ReactiveFormsModule, FormsModule,
     NgPersianDatepickerModule,
-    SharedModule
+    
   ],
   exports: [RouterModule]
 })

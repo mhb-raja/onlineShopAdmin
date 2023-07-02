@@ -1,38 +1,36 @@
 .flex-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 .flex-container .gallery-item {
-  margin: 2px 5px;
-  border: 1px outset purple;
+  margin: 8px;
+  position: relative;
 }
-
 .flex-container .gallery-item .gallery-image {
-  border: 1px outset #3a8000;
+  border: 1px solid #ccc;
   border-radius: 10%;
 }
-
-.flex-container .gallery-item .mat-mini-fab {
-  width: 30px;
-  height: 30px !important;
-  font-size: 20px !important;
-  line-height: 30px !important;
-  display: -webkit-inline-box !important;
-  display: -ms-inline-flexbox !important;
-  display: inline-flex !important;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+.flex-container .gallery-item .gallery-item-delete-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
 }
-
+.flex-container .gallery-item .mat-mini-fab {
+  width: 22px;
+  height: 22px !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
 .flex-container .gallery-item .mat-icon-button {
   width: 20px !important;
   height: 20px !important;
   font-size: 20px !important;
 }
-/*# sourceMappingURL=product-gallery.component.css.map */
+
+.mat-icon {
+  width: 20px;
+  height: 20px;
+}/*# sourceMappingURL=product-gallery.component.css.map */

@@ -1,21 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { shareReplay, startWith, switchMap } from 'rxjs/operators';
 
-import {
-  ProductGalleryDTO,
-  ProductGalleryMiniDTO,
-} from 'src/app/DTOs/product/ProductGalleryDTO';
+import { ProductGalleryDTO,} from 'src/app/DTOs/product/ProductGalleryDTO';
 import { ProductService } from 'src/app/services/product.service';
 import { CropperDialogService } from 'src/app/shared/widgets/image-cropper/cropper-dialog.service';
 import { ProductImageGalleryPath } from 'src/app/Utilities/PathTools';
@@ -75,7 +63,7 @@ export class ProductGalleryComponent implements OnInit, OnChanges {
 
   async openCropper() {
     const result = <string | null>(
-      await this.cropperDialogService.open(this.aspectRatio)
+      await this.cropperDialogService.open(this.aspectRatio)//.then(x=>this.addImage(x))
     );
     if (result) this.addImage(result);
   }

@@ -1,0 +1,140 @@
+<div class="table-container">
+    <table mat-table [dataSource]="items$ | async" matSort (matSortChange)="onSortChange($event)"
+        class="mat-elevation-z8 demo-table">
+        
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef >
+                <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- data columns, built in loop -->
+        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef" >
+            <th  mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!column.sortEnabled">
+                {{column.header}}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf="column.cellData_Type === columnDataType.image" [class]="column.cellData_img_class">
+                    <img [src]="column.cellData_img_src(row)" alt="column.cellData_img_alt(row)">
+                </div>
+                <button *ngIf="column.cellData_Type === columnDataType.button" mat-button color="primary" [routerLink]="[column.cellData_btn_link(row)]">
+                    <mat-icon>{{column.cellData_btn_icon}}</mat-icon>
+                    {{column.cellData_btn_text}}
+                </button>
+                <div *ngIf="column.cellData_Type === columnDataType.boolean">
+                    <mat-icon *ngIf="column.cellData_bool_value(row)" [class]="column.cellData_bool_True_class">
+                        {{column.cellData_bool_True_icon}}</mat-icon>
+                    <mat-icon *ngIf="!column.cellData_bool_value(row)" [class]="column.cellData_bool_False_class">
+                        {{column.cellData_bool_False_icon}}</mat-icon>
+                </div>
+                <div *ngIf="column.cellData_Type === columnDataType.text">
+                    {{column.cellData_text(row)}}
+                </div>
+                                      
+            </td>
+            
+        </ng-container>
+
+        <!-- buttons column -->
+        <ng-container matColumnDef="buttons">
+            <th mat-header-cell *matHeaderCellDef >
+                <button mat-raised-button [disabled]="!selection.hasValue()" [matMenuTriggerFor]="menuBulk" 
+                    aria-label="icon-button with a menu" color="warn">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #menuBulk="matMenu">                                
+                    <button mat-menu-item (click)="removeMultiple()">
+                        <mat-icon>delete_forever</mat-icon>
+                        <span>حذف ردیف های منتخب</span>
+                    </button>                                                         
+                </mat-menu>
+            </th>
+            <td mat-cell *matCellDef="let element" class="actions-container">
+                <button mat-stroked-button color="primary" [matTooltip]="singleBtn.text" 
+                    [routerLink]="[btnActionLink(element.id, singleBtn.action)]">
+                    <mat-icon>{{singleBtn.icon}}</mat-icon>
+                    {{singleBtn.text}}
+                </button>
+                <button mat-stroked-button color="accent" [matMenuTriggerFor]="menu" aria-label="icon-button with a menu">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button *ngFor="let btn of menuButtons" mat-menu-item [routerLink]="[element.id,]">
+                        <mat-icon>{{btn.icon}}</mat-icon>
+                        {{btn.text}}
+                    </button>                     
+                    <button mat-menu-item (click)="removeElement(element)">
+                        <mat-icon>delete_forever</mat-icon>
+                        <span>حذف</span>
+                    </button>                                                         
+                </mat-menu>                                
+            </td>
+        </ng-container> 
+
+        
+        <!-- second header row for filters -->
+
+        <!-- <app-column-filter *ngFor="let filter of secondHeaderFilters" [filter]="filter" (filterChange)="filterChange($event)"></app-column-filter> -->
+        <ng-container *ngFor="let filter of secondHeaderFilters" [matColumnDef]="filter.columnDef" >
+            <th mat-header-cell *matHeaderCellDef>
+                <button mat-raised-button *ngIf="filter.columnDef === 'filter-buttons'" (click)="clearFilters()">حذف فیلترها</button>
+                <span *ngIf="!filter.data">--</span>
+                <span *ngIf="filter.columnDef === 'filter-select'">جستجو در</span>
+                <ng-container *ngFor="let item of filter.data?.details" >
+
+                    <app-input-formfield   *ngIf="filter.data?.type === filterType.input" [label]="filterPrefix + item.label" 
+                        [control]="item.control" [clearable]="true" [appearance]="'outline'" [type]="item.valueType" 
+                        [showHint]="false"></app-input-formfield>
+        
+                    <app-select-formfield  *ngIf="filter.data?.type === filterType.select" [label]="filterPrefix + item.label" 
+                        [control]="item.control" [options]="item.options" [multiple]="item.selectMultiple" ></app-select-formfield> 
+
+                    <!-- <mat-slide-toggle *ngIf="filter.data?.type === filterType.checkbox" [formControl]="item.control">{{filterPrefix + item.label}}</mat-slide-toggle> -->
+
+                </ng-container>
+
+            </th>
+        </ng-container>
+
+
+        <!-- row defs -->
+        <tr class="first-header-row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <ng-container *ngIf="filterActive">
+            <tr mat-header-row *matHeaderRowDef="secondDisplayedColumns" class="second-header-row"></tr>
+        </ng-container>
+        <!-- 
+<tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
+                    [class.read-grayBg]="element.seenByAdmin"
+                    [class.unread]="!element.seenByAdmin"
+                    [routerLink]="['/products/comments',element.productId]"                   
+                    
+                    >
+                </tr>
+
+         -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class]="rowConditionalStyleClass?.myclass(row)"></tr>
+        <tr *matNoDataRow >
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                No data matching the filter.
+            </td>
+        </tr>
+
+    </table>
+    <mat-paginator #paginator *ngIf="dataSource.items" [length]="dataSource.totalItems"
+                            [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [pageSizeOptions]="pageSizeOptions"
+                            (page)="paginateChange($event)" showFirstLastButtons>
+    </mat-paginator>
+</div>
+  

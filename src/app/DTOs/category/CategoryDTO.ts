@@ -22,5 +22,8 @@ export interface CategoryDTO extends CategoryMiniDTO {
     urlTitle: string;
     parentId: number;
     expandable?: boolean;
-    children?: CategoryDTO[];
+    //children?: CategoryDTO[];
 }
+
+                    
+                    

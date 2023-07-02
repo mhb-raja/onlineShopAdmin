@@ -14,23 +14,21 @@ import { HeroSearchComponent } from './modules/heroes/hero-search/hero-search.co
 import { MessageModule } from './shared/widgets/message/message.module';
 import { SharedModule } from './shared/shared.module';
 import { ErrorHandlerService } from './services/error-handler.service';
-import { MatTestComponent } from './modules/mat-test/mat-test.component';
 import { LoginComponent } from './modules/user/login/login.component';
 import { RegisterComponent } from './modules/user/register/register.component';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
 import { HelperService } from './services/helper.service';
 
 
-
-
 @NgModule({
   declarations: [
-    AppComponent,
-    HeroesComponent,
-    HeroSearchComponent,
-    MatTestComponent,
+    AppComponent,    
     LoginComponent,RegisterComponent, 
     NotFoundComponent, 
+    
+    HeroesComponent,
+    HeroSearchComponent,
+ 
   ],
   imports: [
     
@@ -40,7 +38,7 @@ import { HelperService } from './services/helper.service';
     HttpClientModule,
     
     //MaterialModule,
-SharedModule,
+    SharedModule,
 
     MessageModule,
     AppRoutingModule,  

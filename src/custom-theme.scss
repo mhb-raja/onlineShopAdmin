@@ -41,6 +41,30 @@ $sampleAdmin-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($sampleAdmin-theme);
 
+//****************************************************
+
+.kids-theme {
+  $kids-primary: mat.define-palette(mat.$cyan-palette);
+  $kids-accent: mat.define-palette(mat.$yellow-palette);
+
+  // Typography config based on the default, but using "Comic Sans" as the
+  // default font family for all levels.
+  $kids-typography: mat.define-typography-config(
+    $font-family: 'Comic Sans',
+  );
+
+  $kids-theme: mat.define-light-theme((
+   color: (
+     primary: $kids-primary,
+     accent: $kids-accent,
+   ),
+   typography: $kids-typography,
+  ));
+
+  @include mat.all-component-themes($kids-theme);
+}
+
+//**********************************************
 html,
 body {
   height: 100%;
